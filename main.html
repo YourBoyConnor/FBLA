@@ -1,100 +1,97 @@
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="utf-8">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Omega Airlines</title>
-  <meta name="description" content="Omega Airlines">
-  <meta name="author" content="Connor Pymm, Keshav Ganapathy, Adam Goldstein">
-
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
-  <style>
-
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Verdana', sans-serif;
-  }
-
-  #header {
-    height: 100vh;
-    background: linear-gradient(to bottom, blue, orange);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #header {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 25px;
-    background: #fff;
-    display: flex;
-    justify-content: baseline;
-    align-items: baseline;
-  }
-  h1 {
-    padding-top: 45%;
-    font-size: 75px;
-    font-weight: bold;
-    background: linear-gradient(to right, blue, orange);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    max-width: 700px;
-    text-transform: uppercase;
-    line-height: 1;
-  }
-
-  ul {
-    background-position: left;
-    display: table;
-  	margin: auto;
-    list-style-type: none;
-    overflow: hidden;
-    background: linear-gradient(to right, blue, orange);
-  }
-
-  li {
-    float: left;
-  }
-
-  li a {
-    display: block;
-    color: white;
-    background: white;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    max-width: 700px;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-
-  .active {
-    background-color: black;
-  }
-
-  /* Change the link color to #111 (black) on hover */
-  li a:hover {
-    background-color: #000;
-  }
-
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
 </head>
-<ul>
-  <li><a class="active" href="main.html">Home</a></li>
-  <li><a href="">News</a></li>
-  <li><a href="">Contact</a></li>
-  <li><a href="">About</a></li>
-</ul>
-<div id="header">
-  <h1>From Alpha to Omega.</h1>
-</div>
 <body>
+  <nav class="navbar is-transparent">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+      </a>
+      <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navbar" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="https://bulma.io/">
+          Home
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
+            Docs
+          </a>
+          <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
+              Overview
+            </a>
+            <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
+              Modifiers
+            </a>
+            <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
+              Columns
+            </a>
+            <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
+              Layout
+            </a>
+            <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
+              Form
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
+              Elements
+            </a>
+            <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
+              Components
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+                <span>
+                  Tweet
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-primary" href="https://github.com/jgthms/bulma/releases/download/0.8.0/bulma-0.8.0.zip">
+                <span class="icon">
+                  <i class="fas fa-download"></i>
+                </span>
+                <span>Download</span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Omega Airlines
+      </h1>
+      <p class="subtitle">
+        From <strong>Alpha</strong> to <strong>Omega</strong>.
+      </p>
+    </div>
+  </section>
 </body>
 </html>
