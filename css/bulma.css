@@ -2942,8 +2942,11 @@ fieldset[disabled] .button {
 
 .buttons.is-centered {
   justify-content: center;
+<<<<<<< HEAD
   margin-left: auto;
   margin-right: auto;
+=======
+>>>>>>> a140eba4cb4c9cccd50aac9a26e24af7068bbce2
 }
 
 .buttons.is-centered:not(.has-addons) .button:not(.is-fullwidth) {
@@ -3210,6 +3213,7 @@ fieldset[disabled] .button {
   font-size: 1.5rem;
 }
 
+<<<<<<< HEAD
 .content.is-dark {
   background-color: #363636;
   color: #fff;
@@ -3220,6 +3224,8 @@ fieldset[disabled] .button {
   color: #fff;
 }
 
+=======
+>>>>>>> a140eba4cb4c9cccd50aac9a26e24af7068bbce2
 .icon {
   align-items: center;
   display: inline-flex;
@@ -4262,6 +4268,7 @@ a.tag:hover {
   font-size: 0.75rem;
 }
 
+<<<<<<< HEAD
 .is-title {
   font-size: 5rem;
   text-align: center;
@@ -4272,6 +4279,8 @@ a.tag:hover {
   text-align: center;
 }
 
+=======
+>>>>>>> a140eba4cb4c9cccd50aac9a26e24af7068bbce2
 .heading {
   display: block;
   font-size: 11px;
@@ -7912,7 +7921,10 @@ label.panel-block:hover {
   color: #4a4a4a;
   display: flex;
   justify-content: center;
+<<<<<<< HEAD
   margin-top: 1.5em;
+=======
+>>>>>>> a140eba4cb4c9cccd50aac9a26e24af7068bbce2
   margin-bottom: -1px;
   padding: 0.5em 1em;
   vertical-align: top;
@@ -8023,8 +8035,13 @@ label.panel-block:hover {
 }
 
 .tabs.is-toggle li.is-active a {
+<<<<<<< HEAD
   background-color: #363636;
   border-color: #fff;
+=======
+  background-color: #3273dc;
+  border-color: #3273dc;
+>>>>>>> a140eba4cb4c9cccd50aac9a26e24af7068bbce2
   color: #fff;
   z-index: 1;
 }
