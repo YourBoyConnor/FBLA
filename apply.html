@@ -11,7 +11,7 @@
   <nav class="navbar is-dark">
     <div id="navbar" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="home.html">
+        <a class="navbar-item is-active" href="main.html">
           Home
         </a>
       </div>
@@ -44,58 +44,100 @@
     </div>
   </nav>
   <div class="tabs is-toggle is-toggle-rounded is-centered is-fullwidth">
-    <ul>
-      <li>
-        <a href="book.html">
-          <span class="icon is-small"><i class="fas fa-book"></i></span>
-          <span>Book</span>
-        </a>
-      </li>
-      <li>
-        <a href="check-in.html">
-          <span class="icon is-small"><i class="fas fa-download"></i></span>
-          <span>Check-In</span>
-        </a>
-      </li>
-      <li>
-        <a href="trips.html">
-          <span class="icon is-small"><i class="fas fa-plane"></i></span>
-          <span>My Trips</span>
-        </a>
-      </li>
-      <li>
-        <a href="schedules.html">
-          <span class="icon is-small"><i class="fas fa-plane"></i></span>
-          <span>Flight Schedules</span>
-        </a>
-      </li>
-      <li>
-        <a href="frequent-fliers.html">
-          <span class="icon is-small"><i class="fas fa-plane"></i></span>
-          <span>Frequent Fliers</span>
-        </a>
-      </li>
-      <li class="is-active">
-        <a href="apply.html">
-          <span class="icon is-small"><i class="fas fa-upload"></i></span>
-          <span>Apply</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+  <ul>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fas fa-book"></i></span>
+        <span>Book</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fas fa-download"></i></span>
+        <span>Check-In</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fas fa-plane"></i></span>
+        <span>My Trips</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fas fa-plane"></i></span>
+        <span>Flight Schedules</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fas fa-plane"></i></span>
+        <span>Frequent Fliers</span>
+      </a>
+    </li>
+    <li class="is-active">
+      <a>
+        <span class="icon is-small"><i class="fas fa-upload"></i></span>
+        <span>Apply</span>
+      </a>
+    </li>
+  </ul>
+</div>
   <section class="hero is-light is-large is-bold">
     <section class="hero-body">
-      <h1 class="title strong content is-title">
-        Omega Airlines
-      </h1>
-      <section class="container is-light">
-        <p class="content is-subtitle">
-          From <strong>Alpha</strong> to <strong>Omega</strong>.
-        </p>
-        <a href="book.html">
-          <button class="button buttons is-large is-rounded is-centered is-dark">Start Your Journey.</button>
-        </a>
+            <h1 class="title strong content is-title">
+              Apply for a job
+            </h1>
       </section>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="First Name" width="120">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Last Name">
+        </div>
+      </div>
+        <div class="field">
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Phone Number">
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Email">
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="In 100 characters or less, tell us about yourself.">
+          </div>
+        </div>
+      <div class="field">
+        <div class="file is-info has-name">
+          <label class="file-label">
+            <input class="file-input" type="file" name="resume">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Resume
+              </span>
+            </span>
+            <span class="file-name">
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <p class="control">
+          <a class="button is-link">
+            Submit Application!
+          </a>
+        </p>
+    </div>
     </section>
   </section>
   <footer class="footer is-dark">
