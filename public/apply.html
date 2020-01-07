@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Omega Airlines</title>
+  <link rel="stylesheet" href="css/bulma.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script defer src="load.js"></script>
+</head>
+
+<body>
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="home.html">
+        <img src="images/inline-brand.png" alt="Omega">
+      </a>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="home.html">
+          <span>&nbspHome</span>
+        </a>
+        <a class="navbar-item" href="book.html">
+          <i class="fas fa-book"></i>
+          <span>&nbspBook</span>
+        </a>
+        <a class="navbar-item" href="check-in.html">
+          <span class="icon"><i class="fas fa-download"></i></span>
+          <span>&nbspCheck-In</span>
+        </a>
+        <a class="navbar-item" href="trips.html">
+          <span class="icon"><i class="fas fa-plane"></i></span>
+          <span>&nbspMy Trips</span>
+        </a>
+        <a class="navbar-item" href="schedules.html">
+          <span class="icon"><i class="fas fa-plane"></i></span>
+          <span>&nbspFlight Schedules</span>
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a href="frequent-fliers.html" class="navbar-link is-active">
+            <span class="icon"><i class="fas fa-plane"></i></span>
+            <span>&nbspFrequent Fliers</span>
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item is-active" href="apply.html">
+              <span class="icon"><i class="fas fa-upload"></i></span>
+              <span>&nbspApply</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="bd-tw-button button">
+                <span class="icon">
+                  <i class="fas fa-key"></i>
+                </span>
+                <span>
+                  Sign Up
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-black" href="">
+                <span class="icon">
+                  <i class="fas fa-key"></i>
+                </span>
+                <span>
+                  Log In
+                </span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section class="hero is-light is-large is-bold">
+    <section class="hero-body">
+      <h1 class="title strong content is-title">
+        Join Our Team
+      </h1>
+    </section>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="First Name" width="120">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Phone Number">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Email">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="In 100 characters or less, tell us about yourself.">
+        </div>
+      </div>
+      <div class="field">
+        <div class="file is-info has-name">
+          <label class="file-label">
+            <input class="file-input" type="file" name="resume">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Upload Resume
+              </span>
+            </span>
+            <span class="file-name">
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <p class="control">
+          <a class="button is-link">
+            Submit Application
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+  <footer class="footer is-dark">
+    <div class="content has-text-centered is-dark">
+      <p>
+        Omega Airlines by Connor Pymm, Adam Goldstein, and Keshav Ganapathy.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>
