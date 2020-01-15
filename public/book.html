@@ -24,9 +24,6 @@
     </div>
     <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="home.html">
-          <span>&nbspHome</span>
-        </a>
         <a class="navbar-item is-active" href="book.html">
           <i class="fas fa-book"></i>
           <span>&nbspBook</span>
@@ -43,18 +40,14 @@
           <span class="icon"><i class="fas fa-plane"></i></span>
           <span>&nbspFlight Schedules</span>
         </a>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a href="frequent-fliers.html" class="navbar-link">
-            <span class="icon"><i class="fas fa-plane"></i></span>
-            <span>&nbspFrequent Fliers</span>
-          </a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="apply.html">
-              <span class="icon"><i class="fas fa-upload"></i></span>
-              <span>&nbspApply</span>
-            </a>
-          </div>
-        </div>
+        <a class="navbar-item" href="frequent-fliers.html">
+          <span class="icon"><i class="fas fa-plane"></i></span>
+          <span>&nbspFrequent Fliers</span>
+        </a>
+        <a class="navbar-item" href="apply.html">
+          <span class="icon"><i class="fas fa-upload"></i></span>
+          <span>&nbspApply</span>
+        </a>
 
       </div>
       <div class="navbar-end">
@@ -97,18 +90,62 @@
       <div class="columns">
         <div class="column">
           <select>
-            <option value="depart">Departure Airport...</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+            <option value="-1">Departure Airport...</option>
+            <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
+            <option value="HRA">Hagerstown Regional Airport, MD</option>
+            <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
+            <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
+            <option value="LYH">Lynchburg Regional Airport, VA</option>
+            <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
+            <option value="ORF">Norfolk International Airport, VA</option>
+            <option value="RIC">Richmond International Airport, VA</option>
+            <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
+            <option value="CHO">Ronald Reagan Washington National Airport, VA</option>
+            <option value="IAD">Washington Dulles International Airport, VA</option>
+            <option value="ABE">Lehigh Valley International Airport, PA</option>
+            <option value="ERI">Erie International Airport, PA</option>
+            <option value="MDT">Harrisburg International Airport, PA</option>
+            <option value="LBE">Arnold Palmer Regional Airport, PA</option>
+            <option value="PHL">Philadelphia International Airport, PA</option>
+            <option value="PIT">Pittsburgh International Airport, PA</option>
+            <option value="SCE">University Park Airport, PA</option>
+            <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
+            <option value="IPT">Williamsport Regional Airport, PA</option>
+            <option value="CRW">Yeager Airport, WV</option>
+            <option value="CKB">North Central West Virginia Airport, WV</option>
+            <option value="HTS">Tri-State Airport, WV</option>
+            <option value="MGW">Morgantown Municipal Airport, WV</option>
+            <option value="ILG">Wilmington Airport, DE</option>
           </select>
         </div>
         <div class="column">
           <select>
-            <option value="volvo">Arrival Airport...</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+            <option value="-1">Arrival Airport...</option>
+            <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
+            <option value="HRA">Hagerstown Regional Airport, MD</option>
+            <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
+            <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
+            <option value="LYH">Lynchburg Regional Airport, VA</option>
+            <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
+            <option value="ORF">Norfolk International Airport, VA</option>
+            <option value="RIC">Richmond International Airport, VA</option>
+            <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
+            <option value="CHO">Ronald Reagan Washington National Airport, VA</option>
+            <option value="IAD">Washington Dulles International Airport, VA</option>
+            <option value="ABE">Lehigh Valley International Airport, PA</option>
+            <option value="ERI">Erie International Airport, PA</option>
+            <option value="MDT">Harrisburg International Airport, PA</option>
+            <option value="LBE">Arnold Palmer Regional Airport, PA</option>
+            <option value="PHL">Philadelphia International Airport, PA</option>
+            <option value="PIT">Pittsburgh International Airport, PA</option>
+            <option value="SCE">University Park Airport, PA</option>
+            <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
+            <option value="IPT">Williamsport Regional Airport, PA</option>
+            <option value="CRW">Yeager Airport, WV</option>
+            <option value="CKB">North Central West Virginia Airport, WV</option>
+            <option value="HTS">Tri-State Airport, WV</option>
+            <option value="MGW">Morgantown Municipal Airport, WV</option>
+            <option value="ILG">Wilmington Airport, DE</option>
           </select>
         </div>
         <div class="column">
@@ -118,15 +155,7 @@
           <input value="arrival" type="date"></input>
         </div>
         <div class="column">
-          <select>
-            <option value="class">Choose Class...</option>
-            <option value="economy">Economy</option>
-            <option value="business">Business</option>
-            <option value="first">First Class</option>
-          </select>
-        </div>
-        <div class="column">
-          <a class="button is-link">
+          <a class="button is-link" href="seat.html">
             Choose Your Seat
           </a>
         </div>

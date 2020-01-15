@@ -8,12 +8,45 @@
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <body>
-  <nav class="navbar is-dark">
-    <div id="navbar" class="navbar-menu">
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="home.html">
+        <img src="images/inline-brand.png" alt="Omega">
+      </a>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="home.html">
-          Home
+        <a class="navbar-item" href="book.html">
+          <i class="fas fa-book"></i>
+          <span>&nbspBook</span>
         </a>
+        <a class="navbar-item" href="check-in.html">
+          <span class="icon"><i class="fas fa-download"></i></span>
+          <span>&nbspCheck-In</span>
+        </a>
+        <a class="navbar-item" href="trips.html">
+          <span class="icon"><i class="fas fa-plane"></i></span>
+          <span>&nbspMy Trips</span>
+        </a>
+        <a class="navbar-item" href="schedules.html">
+          <span class="icon"><i class="fas fa-plane"></i></span>
+          <span>&nbspFlight Schedules</span>
+        </a>
+        <a class="navbar-item" href="frequent-fliers.html">
+          <span class="icon"><i class="fas fa-plane"></i></span>
+          <span>&nbspFrequent Fliers</span>
+        </a>
+        <a class="navbar-item" href="apply.html">
+          <span class="icon"><i class="fas fa-upload"></i></span>
+          <span>&nbspApply</span>
+        </a>
+
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
