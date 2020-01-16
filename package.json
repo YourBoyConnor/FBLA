@@ -4,7 +4,10 @@
   "description": "AirOmega website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css-build": "node-sass --omit-source-map-url sass/styles.sass public/css/styles.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/YourBoyConnor/FBLA/issues"
   },
-  "homepage": "https://github.com/YourBoyConnor/FBLA#readme"
+  "homepage": "https://github.com/YourBoyConnor/FBLA#readme",
+  "devDependencies": {
+    "bulma": "^0.8.0",
+    "node-sass": "^4.13.0"
+  }
 }
