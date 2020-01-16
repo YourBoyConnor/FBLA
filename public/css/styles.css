@@ -6934,3 +6934,6 @@ button.dropdown-item {
 .is-subtitle {
   font-size: 4rem;
   text-align: center; }
+
+img {
+  max-height: inherit; }
