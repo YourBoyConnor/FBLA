@@ -6,7 +6,35 @@
   <title>Omega Airlines</title>
   <link rel="stylesheet" href="css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <script defer src="js/load.js"></script>
+
+<script src="/__/firebase/7.6.2/firebase-app.js"></script>
+<script src="/__/firebase/7.6.2/firebase-auth.js"></script>
+<script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script src="js/load.js"></script>
+
+<script>
+if (!auth.currentUser) {
+  location.href="signin";
+}
+addEventListener("load", function() {
+  document.getElementById("submit").addEventListener("click", function() {
+    db.collection("users/"+auth.currentUser.uid+"/flights").add({
+      departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
+      departureAirportCode: document.getElementById("departure").value,
+      arrivalAirport: document.getElementById("arrival").selectedOptions[0].innerText,
+      arrivalAirportCode: document.getElementById("arrival").value,
+      departureDate: document.getElementById("departure_time").value,
+      arrivalDate: document.getElementById("arrival_time").value,
+      created: firebase.database.ServerValue.TIMESTAMP
+    }).then(function() {
+      location.href="book";
+    }).catch(function(error) {
+      alert(error);
+    })
+  })
+})
+</script>
 
 </head>
 <body>
@@ -51,7 +79,22 @@
 
       </div>
       <div class="navbar-end">
-        <div class="navbar-item">
+<div id="signed_out_buttons" class="navbar-item is-hidden">
+  <h2>
+    Hello, Friend!
+  </h2>&nbsp&nbsp
+  <p class="control">
+    <a id="sign_out" class="button is-palette-dull">
+      <span class="icon">
+        <i class="fas fa-key"></i>
+      </span>
+      <span>
+        Log Out
+      </span>
+    </a>
+  </p>
+</div>
+        <div id="signed_in_buttons" class="navbar-item is-hidden">
           <div class="field is-grouped">
             <p class="control">
               <a class="bd-tw-button button">
@@ -64,7 +107,7 @@
               </a>
             </p>
             <p class="control">
-              <a class="button is-black" href="">
+              <a class="button is-palette-dull" href="signin">
                 <span class="icon">
                   <i class="fas fa-key"></i>
                 </span>
@@ -89,7 +132,7 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <select>
+          <select id="departure">
             <option value="-1">Departure Airport...</option>
             <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
             <option value="HRA">Hagerstown Regional Airport, MD</option>
@@ -119,7 +162,7 @@
           </select>
         </div>
         <div class="column">
-          <select>
+          <select id="arrival">
             <option value="-1">Arrival Airport...</option>
             <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
             <option value="HRA">Hagerstown Regional Airport, MD</option>
@@ -149,13 +192,13 @@
           </select>
         </div>
         <div class="column">
-          <input value="departure" type="date"></input>
+          <input id="departure_time" value="departure" type="date"></input>
         </div>
         <div class="column">
-          <input value="arrival" type="date"></input>
+          <input id="arrival_time" value="arrival" type="date"></input>
         </div>
         <div class="column">
-          <a class="button is-link" href="seat">
+          <a id="submit" class="button is-link" href="seat">
             Choose Your Seat
           </a>
         </div>

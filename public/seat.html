@@ -6,14 +6,29 @@
   <title>Omega Airlines</title>
   <link rel="stylesheet" href="css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <script defer src="js/load.js"></script>
+
+<script src="/__/firebase/7.6.2/firebase-app.js"></script>
+<script src="/__/firebase/7.6.2/firebase-auth.js"></script>
+<script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script src="js/load.js"></script>
   <script>
 
-  function colorChange(this)() {
-    try {
-    getElementsByClassName('.is-active.button')[0].toggleClass('.button');
-  } catch (ex) {}
-    $(this).toggleClass('.is-active.button');
+  function colorChange(el) {
+    var item = document.getElementsByClassName('is-active button')[0];
+    if (item) {
+      item.classList.remove('is-active');
+    }
+    el.classList.add('is-active');
+  }
+
+  function submit() {
+    var item = document.getElementsByClassName('is-active button')[0];
+    db.collection("users/"+auth.currentUser.uid+"/flights").get().then(function(query) {
+      query.docs[0].set({
+        seatNumber: Array.from(document.querySelectorAll('.column > .button')).indexOf(item)+1
+      })
+    })
   }
 
   </script>
@@ -61,7 +76,22 @@
 
       </div>
       <div class="navbar-end">
-        <div class="navbar-item">
+<div id="signed_out_buttons" class="navbar-item is-hidden">
+  <h2>
+    Hello, Friend!
+  </h2>&nbsp&nbsp
+  <p class="control">
+    <a id="sign_out" class="button is-palette-dull">
+      <span class="icon">
+        <i class="fas fa-key"></i>
+      </span>
+      <span>
+        Log Out
+      </span>
+    </a>
+  </p>
+</div>
+        <div id="signed_in_buttons" class="navbar-item is-hidden">
           <div class="field is-grouped">
             <p class="control">
               <a class="bd-tw-button button">
@@ -74,7 +104,7 @@
               </a>
             </p>
             <p class="control">
-              <a class="button is-black" href="">
+              <a class="button is-palette-dull" href="signin">
                 <span class="icon">
                   <i class="fas fa-key"></i>
                 </span>
