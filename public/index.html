@@ -20,12 +20,23 @@
     let globalLng = -0.09;
     let otherGlobalLng = -0.09;
 
-      let earth;
-      function initialize() {
-        earth = new library.map('earth_div', {dragging: false, unconstrainedRotation: true, zoomControl: false, attributionControl: false, doubleClickZoom: 'center', boxZoom: false, keyboard: false, scrollWheelZoom: 'center', touchZoom: 'center'});
-        //earth.setView([46.8011, 8.2266], 3);
-        earth.setZoom(3);
-        library.tileLayer('https://api.maptiler.com/maps/darkmatter/{z}/{x}/{y}.png?key=aVABHJmwEApjWOelP6HJ',{
+    let earth;
+
+    function initialize() {
+      earth = new library.map('earth_div', {
+        dragging: false,
+        unconstrainedRotation: true,
+        zoomControl: false,
+        attributionControl: false,
+        doubleClickZoom: 'center',
+        boxZoom: false,
+        keyboard: false,
+        scrollWheelZoom: 'center',
+        touchZoom: 'center'
+      });
+      //earth.setView([46.8011, 8.2266], 3);
+      earth.setZoom(3);
+      library.tileLayer('https://api.maptiler.com/maps/darkmatter/{z}/{x}/{y}.png?key=aVABHJmwEApjWOelP6HJ', {
         tileSize: 512,
         zoomOffset: -1,
         minZoom: 1,
@@ -34,27 +45,32 @@
 
       var marker
       if (twoD) {
-      	marker = library.marker([51.5, -0.09], {interactive: false, icon: L.icon({iconUrl: 'images/airplane.png', iconSize: [100, 84]})}).addTo(earth);
+        marker = library.marker([51.5, -0.09], {
+          interactive: false,
+          icon: L.icon({
+            iconUrl: 'images/airplane.png',
+            iconSize: [100, 84]
+          })
+        }).addTo(earth);
       } else {
-      	marker = library.marker([51.5, -0.09], 'images/airplane.png', 100, 84).addTo(earth);
+        marker = library.marker([51.5, -0.09], 'images/airplane.png', 100, 84).addTo(earth);
 
       }
 
-        function animate() {
-          globalLng+=.05;
-          otherGlobalLng+=.04;
-          marker.setLatLng([51.5, globalLng]);
-          earth.setView([51.5, otherGlobalLng]);
-          requestAnimationFrame(animate)
-        }
-
-        animate();
-
+      function animate() {
+        globalLng += .05;
+        otherGlobalLng += .04;
+        marker.setLatLng([51.5, globalLng]);
+        earth.setView([51.5, otherGlobalLng]);
+        requestAnimationFrame(animate)
       }
 
-      addEventListener("load", initialize);
+      animate();
 
-    </script>
+    }
+
+    addEventListener("load", initialize);
+  </script>
 </head>
 
 <body>
@@ -141,6 +157,33 @@
     </section>
   </section>
   <footer class="footer is-dark">
+    <div class="content has-text-centered is-dark">
+      <a href="https://www.instagram.com">
+        <span class="icon is-large has-text-primary">
+          <i class="fab fa-instagram fa-3x"></i>
+        </span>
+      </a>&nbsp;
+      <a href="https://www.twitter.com">
+        <span class="icon is-large has-text-primary">
+          <i class="fab fa-twitter fa-3x"></i>
+        </span>
+      </a>&nbsp;
+      <a href="https://www.facebook.com">
+        <span class="icon is-large has-text-primary">
+          <i class="fab fa-facebook fa-3x"></i>
+        </span></a>&nbsp;
+      <a href="mailto:customservice@airomega.web.app">
+        <span class="icon is-large has-text-primary">
+          <i class="fas fa-envelope fa-3x"></i>
+        </span>
+      </a>
+      <p>
+        Omega Airlines by Connor Pymm, Adam Goldstein, and Keshav Ganapathy.
+      </p>
+      <p>
+        <a href="credits">Credits</a>
+      </p>
+    </div>
     <div class="content has-text-centered is-dark">
       <p>
         Omega Airlines by Connor Pymm, Adam Goldstein, and Keshav Ganapathy.
