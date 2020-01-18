@@ -132,8 +132,7 @@ var greeting, sign_up
     function createAccount() {
 
       auth.createUserWithEmailAndPassword(email.value, password.value).then(function() {
-        return db.collection("users").add({
-          id: auth.currentUser.uid,
+        return db.collection("users").doc(auth.currentUser.uid).set({
           prefix: prefix.value,
           first_name: first_name.value,
           last_name: last_name.value,
