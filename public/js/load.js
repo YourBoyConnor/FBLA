@@ -1,9 +1,7 @@
-var auth, db
+var auth = firebase.auth(),
+  db = firebase.firestore();
 
 document.addEventListener('DOMContentLoaded', function() {
-
-  auth = firebase.auth();
-  db = firebase.firestore();
 
   // Get all "navbar-burger" elements
   var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
