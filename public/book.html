@@ -12,11 +12,9 @@
 <script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
 <script src="/__/firebase/init.js"></script>
 <script src="js/load.js"></script>
+<script src="js/redirSignin.js"></script>
 
 <script>
-if (!auth.currentUser) {
-  location.href="signin";
-}
 addEventListener("load", function() {
   document.getElementById("submit").addEventListener("click", function() {
     db.collection("users/"+auth.currentUser.uid+"/flights").add({
@@ -26,9 +24,9 @@ addEventListener("load", function() {
       arrivalAirportCode: document.getElementById("arrival").value,
       departureDate: document.getElementById("departure_time").value,
       arrivalDate: document.getElementById("arrival_time").value,
-      created: firebase.database.ServerValue.TIMESTAMP
+      created: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function() {
-      location.href="book";
+      location.href="seat";
     }).catch(function(error) {
       alert(error);
     })

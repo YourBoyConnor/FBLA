@@ -25,11 +25,17 @@
   function submit() {
     var item = document.getElementsByClassName('is-active button')[0];
     db.collection("users/"+auth.currentUser.uid+"/flights").get().then(function(query) {
-      query.docs[0].set({
+      return query.docs[0].set({
         seatNumber: Array.from(document.querySelectorAll('.column > .button')).indexOf(item)+1
       })
+    }).then(function() {
+      location.href = "trips";
     })
   }
+
+  addEventListener("load", function() {
+    document.getElementById("submit").addEventListener("click", submit)
+  });
 
   </script>
 
@@ -290,7 +296,7 @@
           </div>
         </div>
       </div>
-      <a class="button is-link" href="/">Book</a>
+      <a id="submit" class="button is-link">Book</a>
     </div>
   </section>
   <footer class="footer is-dark">
