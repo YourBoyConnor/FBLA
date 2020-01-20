@@ -168,17 +168,17 @@ var greeting, sign_up
       auth = firebase.auth();
       db = firebase.firestore();
 
-      prefix.addEventListener("change", checkValid);
-      first_name.addEventListener("change", checkValid);
-      last_name.addEventListener("change", checkValid);
-      phone.addEventListener("change", checkValid);
-      email.addEventListener("change", checkValid);
-      address.addEventListener("change", checkValid);
-      city.addEventListener("change", checkValid);
-      state.addEventListener("change", checkValid);
-      country.addEventListener("change", checkValid);
-      password.addEventListener("change", checkValid);
-      confirm_password.addEventListener("change", checkValid);
+      prefix.addEventListener("input", checkValid);
+      first_name.addEventListener("input", checkValid);
+      last_name.addEventListener("input", checkValid);
+      phone.addEventListener("input", checkValid);
+      email.addEventListener("input", checkValid);
+      address.addEventListener("input", checkValid);
+      city.addEventListener("input", checkValid);
+      state.addEventListener("input", checkValid);
+      country.addEventListener("input", checkValid);
+      password.addEventListener("input", checkValid);
+      confirm_password.addEventListener("input", checkValid);
 
       document.getElementById("create").addEventListener("click", createAccount);
 
