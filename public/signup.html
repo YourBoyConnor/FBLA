@@ -8,183 +8,85 @@
   <link rel="stylesheet" href="css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
-  <script src="/__/firebase/7.6.2/firebase-app.js"></script>
-  <script src="/__/firebase/7.6.2/firebase-auth.js"></script>
-  <script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
-  <script src="/__/firebase/init.js"></script>
+<script src="/__/firebase/7.6.2/firebase-app.js"></script>
+<script src="/__/firebase/7.6.2/firebase-auth.js"></script>
+<script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
+<script src="/__/firebase/init.js"></script>
 <script src="js/load.js"></script>
+<script>
+
+var emailInput,
+  passwordInput,
+  passwordConfirm,
+  loginButton;
+
+function checkValid() {
+  var valid = true;
+
+  if (emailInput.value.match(/([A-Za-z\d\.\_])+@([A-Za-z\d\.])+\.([A-Za-z\d\.])/)) {
+    emailInput.classList.remove("is-danger");
+  } else {
+    emailInput.classList.add("is-danger");
+    valid = false;
+  }
+
+  if (passwordInput.value == "") {
+    passwordInput.classList.add("is-danger");
+    valid = false;
+  } else {
+    passwordInput.classList.remove("is-danger");
+  }
+
+  if (passwordConfirm.value == "") {
+    passwordConfirm.classList.add("is-danger");
+    valid = false;
+  } else {
+    passwordConfirm.classList.remove("is-danger");
+  }
+
+  if (passwordConfirm.value != passwordInput.value) {
+    passwordConfirm.classList.add("is-danger");
+    valid = false;
+  } else {
+    passwordConfirm.classList.remove("is-danger");
+  }
+
+  if (valid) {
+    loginButton.disabled = false;
+  } else {
+    loginButton.disabled = true;
+  }
+
+}
+
+  addEventListener("load", function() {
 
 
-  <script>
+    emailInput = document.getElementById("email_input");
+    passwordInput = document.getElementById("password_input");
+    passwordConfirm = document.getElementById("password_confirm");
+    loginButton = document.getElementById("login_button");
 
-var greeting, sign_up
-
-  var prefix,
-    first_name,
-    last_name,
-    phone,
-    email,
-    address,
-    city,
-    state,
-    country,
-    password,
-    confirm_password,
-    create,
-    auth,
-    db;
-
-    function checkValid() {
-      var valid = true;
-
-      if (prefix.value == "") {
-        prefix.classList.add("is-danger");
-        valid = false;
-      } else {
-        prefix.classList.remove("is-danger");
-      }
-
-      if (first_name.value == "") {
-        first_name.classList.add("is-danger");
-        valid = false;
-      } else {
-        first_name.classList.remove("is-danger");
-      }
-
-      if (last_name.value == "") {
-        last_name.classList.add("is-danger");
-        valid = false;
-      } else {
-        last_name.classList.remove("is-danger");
-      }
-
-      if (phone.value.match(/((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/)) {
-        prefix.classList.remove("is-danger");
-      } else {
-        prefix.classList.add("is-danger");
-        valid = false;
-      }
-
-      if (email.value.match(/([A-Za-z\d\.\_])+@([A-Za-z\d\.])+\.([A-Za-z\d\.])/)) {
-        email.classList.remove("is-danger");
-      } else {
-        email.classList.add("is-danger");
-        valid = false;
-      }
-
-      if (address.value == "") {
-        address.classList.add("is-danger");
-        valid = false;
-      } else {
-        address.classList.remove("is-danger");
-      }
-
-      if (city.value == "") {
-        city.classList.add("is-danger");
-        valid = false;
-      } else {
-        city.classList.remove("is-danger");
-      }
-
-      if (state.value == "") {
-        state.classList.add("is-danger");
-        valid = false;
-      } else {
-        state.classList.remove("is-danger");
-      }
-
-      if (country.value == "") {
-        country.classList.add("is-danger");
-        valid = false;
-      } else {
-        country.classList.remove("is-danger");
-      }
-
-      if (password.value == "") {
-        password.classList.add("is-danger");
-        valid = false;
-      } else {
-        password.classList.remove("is-danger");
-      }
-
-      if (confirm_password.value == "") {
-        confirm_password.classList.add("is-danger");
-        valid = false;
-      } else {
-        confirm_password.classList.remove("is-danger");
-      }
-
-      if (confirm_password.value != password.value) {
-        confirm_password.classList.add("is-danger");
-        valid = false;
-      } else {
-        confirm_password.classList.remove("is-danger");
-      }
-
-      if (valid) {
-        create.disabled = false;
-      } else {
-        create.disabled = true;
-      }
-
-    }
-
-    function createAccount() {
-
-      auth.createUserWithEmailAndPassword(email.value, password.value).then(function() {
-        return db.collection("users").doc(auth.currentUser.uid).set({
-          prefix: prefix.value,
-          first_name: first_name.value,
-          last_name: last_name.value,
-          phone: phone.value,
-          email: email.value,
-          address: address.value,
-          city: city.value,
-          state: state.value,
-          country: country.value
-        })
-      }).then(function() {
-        location.href = "/trips";
-      }).catch(function(error) {
-        alert(error.message)
+    document.getElementById("google").addEventListener("click", function(){
+      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(function(){
+        location.href="trips"
       })
+    })
+    loginButton.addEventListener("click", function(){
+      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value).then(function(){
+        location.href="trips"
+      }).catch(function(error) {
+        alert(error)
+      })
+    })
+    emailInput.addEventListener("input", checkValid);
+    passwordInput.addEventListener("input", checkValid);
+    passwordConfirm.addEventListener("input", checkValid);
+    checkValid();
+  })
 
-    }
 
-    addEventListener("load", function() {
-
-      prefix = document.getElementById("prefix");
-      first_name = document.getElementById("first_name");
-      last_name = document.getElementById("last_name");
-      phone = document.getElementById("phone");
-      email = document.getElementById("email");
-      address = document.getElementById("address");
-      city = document.getElementById("city");
-      state = document.getElementById("state");
-      country = document.getElementById("country");
-      password = document.getElementById("password");
-      confirm_password = document.getElementById("confirm_password");
-      create = document.getElementById("create");
-      auth = firebase.auth();
-      db = firebase.firestore();
-
-      prefix.addEventListener("input", checkValid);
-      first_name.addEventListener("input", checkValid);
-      last_name.addEventListener("input", checkValid);
-      phone.addEventListener("input", checkValid);
-      email.addEventListener("input", checkValid);
-      address.addEventListener("input", checkValid);
-      city.addEventListener("input", checkValid);
-      state.addEventListener("input", checkValid);
-      country.addEventListener("input", checkValid);
-      password.addEventListener("input", checkValid);
-      confirm_password.addEventListener("input", checkValid);
-
-      document.getElementById("create").addEventListener("click", createAccount);
-
-    });
-  </script>
-
+</script>
 </head>
 
 <body>
@@ -218,7 +120,7 @@ var greeting, sign_up
           <span class="icon"><i class="fas fa-plane"></i></span>
           <span>&nbspFlight Schedules</span>
         </a>
-        <a class="navbar-item" href="frequent-fliers">
+        <a class="navbar-item is-active" href="frequent-fliers">
           <span class="icon"><i class="fas fa-plane"></i></span>
           <span>&nbspFrequent Fliers</span>
         </a>
@@ -229,21 +131,21 @@ var greeting, sign_up
 
       </div>
       <div class="navbar-end">
-        <div id="signed_out_buttons" class="navbar-item is-hidden">
-          <h2>
-            Hello, Friend!
-          </h2>&nbsp&nbsp
-          <p class="control">
-            <a id="sign_out" class="button is-palette-dull">
-              <span class="icon">
-                <i class="fas fa-key"></i>
-              </span>
-              <span>
-                Log Out
-              </span>
-            </a>
-          </p>
-        </div>
+<div id="signed_out_buttons" class="navbar-item is-hidden">
+  <h2>
+    Hello, Friend!
+  </h2>&nbsp&nbsp
+  <p class="control">
+    <a id="sign_out" class="button is-palette-dull">
+      <span class="icon">
+        <i class="fas fa-key"></i>
+      </span>
+      <span>
+        Log Out
+      </span>
+    </a>
+  </p>
+</div>
         <div id="signed_in_buttons" class="navbar-item is-hidden">
           <div class="field is-grouped">
             <p class="control">
@@ -274,80 +176,44 @@ var greeting, sign_up
   <section class="hero is-light is-large is-bold">
     <section class="hero-body">
       <h1 class="title strong content is-title">
-        Welcome to the Omega Family!
+        Sign Up
       </h1>
-    </section>
-  </section>
-  <section class="section">
-    <div class="container">
-      <h2 class="subtitle">Basic Information</h2>
-      <div class="field">
-        <div class="control">
-          <input required id="prefix" class="input is-info" type="text" placeholder="Prefix" width="120">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="first_name" class="input is-info" type="text" placeholder="First Name" width="120">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="last_name" class="input is-info" type="text" placeholder="Last Name">
-        </div>
-      </div>
-      <div class="is-divider" data-content=""></div>
-      <h2 class="subtitle">Contact Information</h2>
-      <div class="field">
-        <div class="control">
-          <input required id="phone" class="input is-info" type="text" placeholder="Phone Number">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="email" class="input is-info" type="text" placeholder="Email">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="address" class="input is-info" type="text" placeholder="Home Address 1">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="city" class="input is-info" type="text" placeholder="City">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="state" class="input is-info" type="text" placeholder="State">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="country" class="input is-info" type="text" placeholder="Country">
-        </div>
-      </div>
-      <div class="is-divider" data-content=""></div>
-      <h2 class="subtitle">Login Information</h2>
-      <div class="field">
-        <div class="control">
-          <input required id="password" class="input is-info" type="password" placeholder="Password">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="confirm_password" class="input is-info" type="password" placeholder="Confirm Password">
-        </div>
-      </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <button disabled id="create" class="button is-link">
-            Create Account
+      <div class="columns is-variable is-6">
+        <div class="column is-2 is-offset-4">
+          <button id="google" class="button is-pulled-right">
+            <span class="icon">
+              <i class="fab fa-google">
+              </i>
+            </span>
+            &nbsp;&nbsp;Sign Up with Google
           </button>
         </div>
+        <div class="column is-2">
+            <div class="field">
+              <div class="control">
+                <input id="email_input" class="input is-info" type="text" placeholder="Email" width="120">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <input id="password_input" class="input is-info" type="password" placeholder="Password">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <input id="password_confirm" class="input is-info" type="password" placeholder="Confirm Password">
+              </div>
+            </div>
+            <div class="field is-grouped">
+              <p class="control">
+                <button id="login_button" class="button is-link">
+                  Sign Up
+                </button>
+              </p>
+            </div>
+        </div>
       </div>
-    </div>
+    </section>
   </section>
   <footer class="footer is-dark">
     <div class="content has-text-centered is-dark">
@@ -383,3 +249,109 @@ var greeting, sign_up
 </body>
 
 </html>
+
+
+<!--
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+<script src="/__/firebase/7.6.2/firebase-app.js"></script>
+<script src="/__/firebase/7.6.2/firebase-auth.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script src="js/load.js"></script>estore.js"></script>
+<script src="/__/firebase/init.js"></script>ice-width, initial-scale=1">
+  <title>Omega Airlines</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script defer src="js/load.js"></script>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <br>
+      <br>
+      <br>
+      <figure class="image is-128x128">
+        <img src="https://bulma.io/images/placeholders/128x128.png">
+      </figure>
+      <br>
+      <br>
+      <br>
+      <h2 class="title">Welcome back Omega Airlines! </h2>
+      <h2 class="title">This is a website designed for the 2020 FBLA Website Design Regional Competition! </h2>
+      <br>
+      <br>
+      <br>
+      <p>Don't Have an Account? <a>Click Here!</a>
+      <h2 class="subtitle">Log In</h2>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Email" width="120">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="password" placeholder="Password">
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <p class="control">
+          <a class="button is-link">
+            Log In
+          </a>
+          <br>
+          <br>
+          <button class="button">
+            <span class="icon">
+              <i class="fab fa-google">
+              </i>
+            </span>
+            &nbsp;&nbsp;Sign in with Google
+          </button>
+          <br>
+          <br>
+          <br>
+        </p>
+      </div>
+    </div>
+  </section>
+  <footer class="footer is-dark">
+    <div class="content has-text-centered is-dark">
+  <a href="https://www.instagram.com">
+    <span class="icon is-large has-text-primary">
+      <i class="fab fa-instagram fa-3x"></i>
+    </span>
+  </a>&nbsp;
+  <a href="https://www.twitter.com">
+    <span class="icon is-large has-text-primary">
+      <i class="fab fa-twitter fa-3x"></i>
+    </span>
+  </a>&nbsp;
+  <a href="https://www.facebook.com">
+    <span class="icon is-large has-text-primary">
+      <i class="fab fa-facebook fa-3x"></i>
+    </span></a>&nbsp;
+  <a href="mailto:customservice@airomega.web.app">
+    <span class="icon is-large has-text-primary">
+      <i class="fas fa-envelope fa-3x"></i>
+    </span>
+  </a>
+      <p>
+        Omega Airlines by Connor Pymm, Adam Goldstein, and Keshav Ganapathy.
+</p>
+<p>
+<a href="credits">Credits</a>
+</p>
+
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>
+-->
