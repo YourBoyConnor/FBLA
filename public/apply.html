@@ -44,7 +44,7 @@
           email: document.getElementById("email").value,
           blurb: document.getElementById("blurb").value,
           file: uri,
-          user: auth.currentUser ? auth.currentUser.uid : "undefined"
+          user: auth.currentUser ? auth.currentUser.id : "undefined"
         });
       })
       reader.readAsDataURL(document.getElementById("theFileInput").files[0]);
@@ -195,7 +195,7 @@
     </div>
   </section>
   <section class="container">
-    <figure class="image is-3by1">
+    <figure class="image is-16by9">
         <img src="images/apply.jpg">
        </figure>
   </section>
