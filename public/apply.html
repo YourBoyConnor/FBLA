@@ -13,6 +13,7 @@
 <script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
 <script src="/__/firebase/init.js"></script>
 <script src="js/load.js"></script>
+
 </head>
 
 <body>
@@ -186,6 +187,15 @@
       </p>
     </div>
   </footer>
+  <script>
+  const fileInput = document.querySelector('#file-js-example input[type=file]');
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector('#file-js-example .file-name');
+      fileName.textContent = fileInput.files[0].name;
+    }
+  }
+</script>
 </body>
 
 </html>
