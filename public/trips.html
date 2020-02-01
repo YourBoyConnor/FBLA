@@ -16,11 +16,8 @@
 </head>
 
 <script>
-addEventListener("load", function() {
-  db.get("users/"+auth.currentUser.uid+"/flights").get()
-});
-`<div class="container">
-  <div class="box">
+function parse(data, name) {
+  return `<div class="box">
     <article class="media">
       <div class="media-left">
         <figure class="image is-64x64">
@@ -38,27 +35,29 @@ addEventListener("load", function() {
             <i>From Alpha to Omega</i>
             <br>
             <br>
-            Date: <strong> January 1st, 2020 - 1/1/20 (Pick whatever you think is better I dont mind either)</strong>
+            Departure Date: <strong>${data.departureDate}</strong>
             <br>
-            Flight Number: <strong>#OM1234 (OM is constant signifying Omega and a random 4 numbers)</strong>
+            Arrival Date: <strong>${data.arrivalDate}</strong>
             <br>
-            Seat Number: <strong>1A (Number 1 to 30 and letter A through F)</strong>
+            Flight Number: <strong>#OM${data.created.nanoseconds/100000} (OM is constant signifying Omega and a random 4 numbers)</strong>
             <br>
-            Starting Airport: <strong>Full Name (Abbreviation)</strong>
+            Seat Number: <strong>${data.seatNumber}</strong>
             <br>
-            Departure Time: <strong>1:23</strong>
+            Departure Airport: <strong>${data.departureAirport} (${data.departureAirportCode})</strong>
             <br>
-            Ending Airport: <strong>Full Name (Abbreviation)</strong>
+            Departure Time: <strong>${data.departureTime}</strong>
             <br>
-            Arrival Time: <strong>4:56</strong>
+            Arrival Airport: <strong>${data.arrivalAirport} (${data.arrivalAirportCode})</strong>
             <br>
-            Gate: <strong>1A (Number 1 to 12 and letter A, B, or C)</strong>
+            Arrival Time: <strong>${data.arrivalTime}</strong>
             <br>
-            Class: <strong>Economy (Economy, First, or Buisness)</strong>
+            Gate: <strong>${data.gate}</strong>
             <br>
-            Boarding Group: <strong>A (Can be A B or C)</strong>
+            Class: <strong>${data.seatNumber <= 18 ? "Economy" : (data.seatNumber <= 42 ? "Business" : "First")}</strong>
             <br>
-            <figure class="image is-128x128 is-marginless"><img src="https://chart.googleapis.com/chart?cht=qr&chs=128x128&chld=H|0&chl=stuff" alt="QR Code; Ask an associate for assistance if needed."></figure>
+            Boarding Group: <strong>${data.seatNumber <= 18 ? "C" : (data.seatNumber <= 42 ? "B" : "A")}</strong>
+            <br>
+            <figure class="image is-128x128 is-marginless"><img src="https://chart.googleapis.com/chart?cht=qr&chs=128x128&chld=H|0&chl=${name}" alt="QR Code; Ask an associate for assistance if needed."></figure>
           </p>
         </div>
         <nav class="level is-mobile">
@@ -72,8 +71,19 @@ addEventListener("load", function() {
         </nav>
       </div>
     </article>
-  </div>
-</div>`;
+  </div>`
+}
+
+auth.onAuthStateChanged(function(user) {
+  db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("departureDate").get().then(result=>{
+    code = "";
+    for (doc of result.docs) {
+      console.log(doc,doc.data(),doc.id);
+      code += parse(doc.data(), doc.id);
+    }
+    document.getElementById("boxes").innerHTML = code;
+  })
+});
 </script>
 
 <body>
@@ -164,7 +174,7 @@ addEventListener("load", function() {
     </section>
   </section>
   <section class="section">
-    <div class="container">
+    <div id="boxes" class="container">
       <div class="box">
         <article class="media">
           <div class="media-left">
