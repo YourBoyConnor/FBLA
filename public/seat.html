@@ -24,8 +24,8 @@
 
   function submit() {
     var item = document.getElementsByClassName('is-active button')[0];
-    db.collection("users/"+auth.currentUser.uid+"/flights").get().then(function(query) {
-      return query.docs[0].set({
+    db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("created", "desc").get().then(function(query) {
+      return db.doc(query.docs[0]._document.proto.name.split("/documents/")[1]).update({
         seatNumber: Array.from(document.querySelectorAll('.column > .button')).indexOf(item)+1
       })
     }).then(function() {
@@ -138,7 +138,7 @@
         <div class="column">
           <div class="columns">
             <div class="column">
-              <a onclick="colorChange(this)" class="button">Seat</a>
+              <a onclick="colorChange(this)" class="button is-active">Seat</a>
               <a onclick="colorChange(this)" class="button">Seat</a>
               <a onclick="colorChange(this)" class="button">Seat</a>
             </div>
@@ -158,7 +158,7 @@
         <div class="column">
           <div class="columns">
             <div class="column">
-              <a onclick="colorChange(this)" class="button is-active">Seat</a>
+              <a onclick="colorChange(this)" class="button">Seat</a>
               <a onclick="colorChange(this)" class="button">Seat</a>
               <a onclick="colorChange(this)" class="button">Seat</a>
             </div>
@@ -296,7 +296,17 @@
           </div>
         </div>
       </div>
-      <a id="submit" class="button is-link">Book</a>
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <a id="submit" class="button is-link">Book</a>
+          </div>
+          <div class="level-item">
+            <span class="title is-4">NOTE: You will be billed for this flight upon booking.</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
   <footer class="footer is-dark">
@@ -327,7 +337,6 @@
 <a href="credits">Credits</a>
 </p>
 
-    </p>
   </div>
 </footer>
 </body>

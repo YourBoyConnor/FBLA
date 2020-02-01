@@ -26,6 +26,16 @@ addEventListener("load", function() {
       arrivalDate: document.getElementById("arrival_time").value,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function() {
+      return db.collection("flights").add({
+        departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
+        departureAirportCode: document.getElementById("departure").value,
+        arrivalAirport: document.getElementById("arrival").selectedOptions[0].innerText,
+        arrivalAirportCode: document.getElementById("arrival").value,
+        departureDate: document.getElementById("departure_time").value,
+        arrivalDate: document.getElementById("arrival_time").value,
+        created: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }).then(function() {
       location.href="seat";
     }).catch(function(error) {
       alert(error);
@@ -196,7 +206,7 @@ addEventListener("load", function() {
           <input id="arrival_time" value="arrival" type="date"></input>
         </div>
         <div class="column">
-          <a id="submit" class="button is-link" href="seat">
+          <a id="submit" class="button is-link">
             Choose Your Seat
           </a>
         </div>
