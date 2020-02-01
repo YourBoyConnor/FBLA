@@ -59,9 +59,9 @@ var greeting, sign_up
       }
 
       if (phone.value.match(/((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/)) {
-        prefix.classList.remove("is-danger");
+        phone.classList.remove("is-danger");
       } else {
-        prefix.classList.add("is-danger");
+        phone.classList.add("is-danger");
         valid = false;
       }
 
@@ -114,7 +114,7 @@ var greeting, sign_up
         confirm_password.classList.remove("is-danger");
       }
 
-      if (confirm_password.value != password.value) {
+      if (!confirm_password.value || confirm_password.value != password.value) {
         confirm_password.classList.add("is-danger");
         valid = false;
       } else {
@@ -181,6 +181,8 @@ var greeting, sign_up
       confirm_password.addEventListener("input", checkValid);
 
       document.getElementById("create").addEventListener("click", createAccount);
+
+      checkValid();
 
     });
   </script>
