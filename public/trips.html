@@ -87,6 +87,9 @@ auth.onAuthStateChanged(function(user) {
         code += parse(doc.data(), doc._document.proto.name, firstName, lastName);
       }
       document.getElementById("boxes").innerHTML = code;
+      if (result.empty) {
+        document.getElementById("boxes").innerHTML = "You have not scheduled any flights."
+      }
     });
   })
 });

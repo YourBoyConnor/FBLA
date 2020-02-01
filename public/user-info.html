@@ -24,7 +24,6 @@ var greeting, sign_up
     first_name,
     last_name,
     phone,
-    email,
     address,
     city,
     state,
@@ -63,13 +62,6 @@ var greeting, sign_up
         phone.classList.remove("is-danger");
       } else {
         phone.classList.add("is-danger");
-        valid = false;
-      }
-
-      if (email.value.match(/([A-Za-z\d\.\_])+@([A-Za-z\d\.])+\.([A-Za-z\d\.])/)) {
-        email.classList.remove("is-danger");
-      } else {
-        email.classList.add("is-danger");
         valid = false;
       }
 
@@ -116,7 +108,6 @@ var greeting, sign_up
           first_name: first_name.value,
           last_name: last_name.value,
           phone: phone.value,
-          email: email.value,
           address: address.value,
           city: city.value,
           state: state.value,
@@ -135,7 +126,6 @@ var greeting, sign_up
       first_name = document.getElementById("first_name");
       last_name = document.getElementById("last_name");
       phone = document.getElementById("phone");
-      email = document.getElementById("email");
       address = document.getElementById("address");
       city = document.getElementById("city");
       state = document.getElementById("state");
@@ -148,7 +138,6 @@ var greeting, sign_up
       first_name.addEventListener("input", checkValid);
       last_name.addEventListener("input", checkValid);
       phone.addEventListener("input", checkValid);
-      email.addEventListener("input", checkValid);
       address.addEventListener("input", checkValid);
       city.addEventListener("input", checkValid);
       state.addEventListener("input", checkValid);
@@ -273,11 +262,6 @@ var greeting, sign_up
       <div class="field">
         <div class="control">
           <input required id="phone" class="input is-info" type="text" placeholder="Phone Number">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input required id="email" class="input is-info" type="text" placeholder="Email">
         </div>
       </div>
       <div class="field">
