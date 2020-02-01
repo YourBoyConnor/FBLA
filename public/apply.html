@@ -44,7 +44,7 @@
           email: document.getElementById("email").value,
           blurb: document.getElementById("blurb").value,
           file: uri,
-          user: auth.currentUser ? auth.currentUser.id : "undefined"
+          user: auth.currentUser ? auth.currentUser.uid : "undefined"
         }).then(function() {
           location.href = "thanks";
         });
