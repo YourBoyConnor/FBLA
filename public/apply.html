@@ -45,6 +45,8 @@
           blurb: document.getElementById("blurb").value,
           file: uri,
           user: auth.currentUser ? auth.currentUser.id : "undefined"
+        }).then(function() {
+          location.href = "thanks";
         });
       })
       reader.readAsDataURL(document.getElementById("theFileInput").files[0]);
