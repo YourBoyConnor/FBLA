@@ -17,6 +17,11 @@
 <script>
 addEventListener("load", function() {
   document.getElementById("submit").addEventListener("click", function() {
+
+    var departureTime = (Math.floor(Math.random()*12)+1)+":"+((15*Math.floor(Math.random()*4))+"").padStart(2,"0")+(Math.floor(Math.random()*2)?"AM":"PM");
+    var arrivalTime = (Math.floor(Math.random()*12)+1)+":"+((15*Math.floor(Math.random()*4))+"").padStart(2,"0")+(Math.floor(Math.random()*2)?"AM":"PM");
+    var gate = ["A","B","C"][Math.floor(Math.random()*3)]+(Math.floor(Math.random()*12)+1);
+
     db.collection("users/"+auth.currentUser.uid+"/flights").add({
       departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
       departureAirportCode: document.getElementById("departure").value,
@@ -24,7 +29,10 @@ addEventListener("load", function() {
       arrivalAirportCode: document.getElementById("arrival").value,
       departureDate: document.getElementById("departure_time").value,
       arrivalDate: document.getElementById("arrival_time").value,
-      created: firebase.firestore.FieldValue.serverTimestamp()
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      departureTime: departureTime,
+      arrivalTime: arrivalTime,
+      gate: gate
     }).then(function() {
       return db.collection("flights").add({
         departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
@@ -33,7 +41,10 @@ addEventListener("load", function() {
         arrivalAirportCode: document.getElementById("arrival").value,
         departureDate: document.getElementById("departure_time").value,
         arrivalDate: document.getElementById("arrival_time").value,
-        created: firebase.firestore.FieldValue.serverTimestamp()
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        departureTime: departureTime,
+        arrivalTime: arrivalTime,
+        gate: gate
       });
     }).then(function() {
       location.href="seat";

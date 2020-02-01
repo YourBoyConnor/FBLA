@@ -79,8 +79,8 @@ auth.onAuthStateChanged(function(user) {
 
   db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("departureDate").get().then(result=>{
     db.doc("users/"+auth.currentUser.uid).get().then(function(nameResult) {
-      firstName = nameResult.data().first_name;
-      lastName = nameResult.data().last_name;
+      var firstName = nameResult.data().first_name;
+      var lastName = nameResult.data().last_name;
 
       code = "";
       for (doc of result.docs) {
@@ -181,7 +181,7 @@ auth.onAuthStateChanged(function(user) {
   </section>
   <section class="section">
     <div id="boxes" class="container">
-      
+
     </div>
   </section>
   <footer class="footer is-dark">

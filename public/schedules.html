@@ -62,7 +62,7 @@ function parse(data, name) {
 auth.onAuthStateChanged(function(user) {
 
   db.collection("flights").orderBy("departureDate").get().then(result=>{
-    code = "";
+    var code = "";
     for (doc of result.docs) {
       code += parse(doc.data(), doc._document.proto.name);
     }

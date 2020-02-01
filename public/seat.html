@@ -26,10 +26,7 @@
     var item = document.getElementsByClassName('is-active button')[0];
     db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("created", "desc").get().then(function(query) {
       return db.doc(query.docs[0]._document.proto.name.split("/documents/")[1]).update({
-        seatNumber: Array.from(document.querySelectorAll('.column > .button')).indexOf(item)+1,
-        departureTime: (Math.floor(Math.random()*12)+1)+":"+((15*Math.floor(Math.random()*4))+"").padStart(2,"0")+(Math.floor(Math.random()*2)?"AM":"PM"),
-        arrivalTime: (Math.floor(Math.random()*12)+1)+":"+((15*Math.floor(Math.random()*4))+"").padStart(2,"0")+(Math.floor(Math.random()*2)?"AM":"PM"),
-        gate: ["A","B","C"][Math.floor(Math.random()*3)]+(Math.floor(Math.random()*12)+1)
+        seatNumber: Array.from(document.querySelectorAll('.column > .button')).indexOf(item)+1
       })
     }).then(function() {
       location.href = "trips";
