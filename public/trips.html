@@ -16,7 +16,7 @@
 </head>
 
 <script>
-function parse(data, name) {
+function parse(data, name, firstName, lastName) {
   return `<div class="box">
     <article class="media">
       <div class="media-left">
@@ -27,7 +27,7 @@ function parse(data, name) {
       <div class="media-content">
         <div class="content">
           <p>
-            <strong>First</strong> <strong>Last</strong>
+            <strong>${firstName}</strong> <strong>${lastName}</strong>
             <br>
             <br>
             Thank you for flying Omega Airlines! We hope you have a fantastic experience on your flight!
@@ -39,7 +39,7 @@ function parse(data, name) {
             <br>
             Arrival Date: <strong>${data.arrivalDate}</strong>
             <br>
-            Flight Number: <strong>#OM${data.created.nanoseconds/100000} (OM is constant signifying Omega and a random 4 numbers)</strong>
+            Flight Number: <strong>#OM${data.created.nanoseconds/100000}</strong>
             <br>
             Seat Number: <strong>${data.seatNumber}</strong>
             <br>
@@ -75,13 +75,18 @@ function parse(data, name) {
 }
 
 auth.onAuthStateChanged(function(user) {
+
   db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("departureDate").get().then(result=>{
-    code = "";
-    for (doc of result.docs) {
-      console.log(doc,doc.data(),doc.id);
-      code += parse(doc.data(), doc.id);
-    }
-    document.getElementById("boxes").innerHTML = code;
+    db.doc("users/"+auth.currentUser.uid).get().then(function(nameResult) {
+      firstName = nameResult.data().first_name;
+      lastName = nameResults.data().last_name;
+
+      code = "";
+      for (doc of result.docs) {
+        code += parse(doc.data(), doc.id, firstName, lastName);
+      }
+      document.getElementById("boxes").innerHTML = code;
+    });
   })
 });
 </script>
