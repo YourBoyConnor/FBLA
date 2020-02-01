@@ -25,7 +25,7 @@
   function submit() {
     var item = document.getElementsByClassName('is-active button')[0];
     db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("created", "desc").get().then(function(query) {
-      return db.doc(query.docs[0]._document.proto.name.split("/documents/")[1]).update({
+      return db.doc(query.docs[0]._document.proto.name.split("/documents/")[1]).updae({
         seatNumber: Array.from(document.querySelectorAll('.column > .button')).indexOf(item)+1
       })
     }).then(function() {
@@ -58,10 +58,6 @@
         <a class="navbar-item is-active" href="book">
           <i class="fas fa-book"></i>
           <span>&nbspBook</span>
-        </a>
-        <a class="navbar-item" href="check-in">
-          <span class="icon"><i class="fas fa-download"></i></span>
-          <span>&nbspCheck-In</span>
         </a>
         <a class="navbar-item" href="trips">
           <span class="icon"><i class="fas fa-plane"></i></span>

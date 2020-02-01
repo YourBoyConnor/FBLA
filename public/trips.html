@@ -19,7 +19,7 @@
 addEventListener("load", function() {
   db.get("users/"+auth.currentUser.uid+"/flights").get()
 });
-<div class="container">
+`<div class="container">
   <div class="box">
     <article class="media">
       <div class="media-left">
@@ -73,7 +73,7 @@ addEventListener("load", function() {
       </div>
     </article>
   </div>
-</div>
+</div>`;
 </script>
 
 <body>
@@ -94,10 +94,6 @@ addEventListener("load", function() {
         <a class="navbar-item" href="book">
           <i class="fas fa-book"></i>
           <span>&nbspBook</span>
-        </a>
-        <a class="navbar-item" href="check-in">
-          <span class="icon"><i class="fas fa-download"></i></span>
-          <span>&nbspCheck-In</span>
         </a>
         <a class="navbar-item is-active" href="trips">
           <span class="icon"><i class="fas fa-plane"></i></span>
