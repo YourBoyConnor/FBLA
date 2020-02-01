@@ -13,6 +13,7 @@
 <script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
 <script src="/__/firebase/init.js"></script>
 <script src="js/load.js"></script>
+<script src="js/redirSignin.js"></script>
 </head>
 
 <script>
@@ -79,7 +80,7 @@ auth.onAuthStateChanged(function(user) {
   db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("departureDate").get().then(result=>{
     db.doc("users/"+auth.currentUser.uid).get().then(function(nameResult) {
       firstName = nameResult.data().first_name;
-      lastName = nameResults.data().last_name;
+      lastName = nameResult.data().last_name;
 
       code = "";
       for (doc of result.docs) {
