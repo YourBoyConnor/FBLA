@@ -21,7 +21,10 @@
   "homepage": "https://github.com/YourBoyConnor/FBLA#readme",
   "devDependencies": {
     "bulma": "^0.8.0",
-    "leaflet": "^1.5.1",
-    "node-sass": "^4.13.0"
+    "leaflet": "^1.5.1"
+  },
+  "dependencies": {
+    "bulma-calendar": "^6.0.7",
+    "node-sass": "^4.13.1"
   }
 }

@@ -1,80 +1,140 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="images/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-<link rel="manifest" href="manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Omega Airlines</title>
   <link rel="stylesheet" href="css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
-<script src="/__/firebase/7.6.2/firebase-app.js"></script>
-<script src="/__/firebase/7.6.2/firebase-auth.js"></script>
-<script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
-<script src="/__/firebase/init.js"></script>
-<script src="js/load.js"></script>
-<script src="js/redirSignin.js"></script>
+  <script src="/__/firebase/7.6.2/firebase-app.js"></script>
+  <script src="/__/firebase/7.6.2/firebase-auth.js"></script>
+  <script src="/__/firebase/7.6.2/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="js/load.js"></script>
+  <script src="js/redirSignin.js"></script>
+  <script src="js/bulma-calendar.min.js"></script>
 
-<script>
-addEventListener("load", function() {
-  document.getElementById("submit").addEventListener("click", function() {
+  <script>
+    addEventListener("load", function() {
 
-    var departureTime = (Math.floor(Math.random()*12)+1)+":"+((15*Math.floor(Math.random()*4))+"").padStart(2,"0")+(Math.floor(Math.random()*2)?"AM":"PM");
-    var arrivalTime = (Math.floor(Math.random()*12)+1)+":"+((15*Math.floor(Math.random()*4))+"").padStart(2,"0")+(Math.floor(Math.random()*2)?"AM":"PM");
-    var gate = ["A","B","C"][Math.floor(Math.random()*3)]+(Math.floor(Math.random()*12)+1);
+      function parse(data, name) {
+        return `<div class="box">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <img src="images/omega.png" alt="Omega">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <i>From Alpha to Omega</i>
+                  <br>
+                  <br>
+                  Departure Date: <strong>${data.departureDate}</strong>
+                  <br>
+                  Arrival Date: <strong>${data.arrivalDate}</strong>
+                  <br>
+                  Flight Number: <strong>#OM${data.created.nanoseconds/100000}</strong>
+                  <br>
+                  Departure Airport: <strong>${data.departureAirport} (${data.departureAirportCode})</strong>
+                  <br>
+                  Departure Time: <strong>${data.departureTime}</strong>
+                  <br>
+                  Arrival Airport: <strong>${data.arrivalAirport} (${data.arrivalAirportCode})</strong>
+                  <br>
+                  Arrival Time: <strong>${data.arrivalTime}</strong>
+                  <br>
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>`
+      }
 
-    db.collection("users/"+auth.currentUser.uid+"/flights").add({
-      departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
-      departureAirportCode: document.getElementById("departure").value,
-      arrivalAirport: document.getElementById("arrival").selectedOptions[0].innerText,
-      arrivalAirportCode: document.getElementById("arrival").value,
-      departureDate: document.getElementById("departure_time").value,
-      arrivalDate: document.getElementById("arrival_time").value,
-      created: firebase.firestore.FieldValue.serverTimestamp(),
-      departureTime: departureTime,
-      arrivalTime: arrivalTime,
-      gate: gate
-    }).then(function() {
-      return db.collection("flights").add({
-        departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
-        departureAirportCode: document.getElementById("departure").value,
-        arrivalAirport: document.getElementById("arrival").selectedOptions[0].innerText,
-        arrivalAirportCode: document.getElementById("arrival").value,
-        departureDate: document.getElementById("departure_time").value,
-        arrivalDate: document.getElementById("arrival_time").value,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        departureTime: departureTime,
-        arrivalTime: arrivalTime,
-        gate: gate
-      });
-    }).then(function() {
-      location.href="seat";
-    }).catch(function(error) {
-      alert(error);
+      var calendars = bulmaCalendar.attach('[type="date"]', {startDate: new Date()});
+
+      document.getElementById("submit").addEventListener("click", function() {
+
+        //var departureTime = (Math.floor(Math.random() * 12) + 1) + ":" + ((15 * Math.floor(Math.random() * 4)) + "").padStart(2, "0") + (Math.floor(Math.random() * 2) ? "AM" : "PM");
+        //var arrivalTime = (Math.floor(Math.random() * 12) + 1) + ":" + ((15 * Math.floor(Math.random() * 4)) + "").padStart(2, "0") + (Math.floor(Math.random() * 2) ? "AM" : "PM");
+        //var gate = ["A", "B", "C"][Math.floor(Math.random() * 3)] + (Math.floor(Math.random() * 12) + 1);
+        var flightRef = db.collection("flights");
+        var queryFlightRef = flightRef;
+        if (document.getElementById("departure").value != "-1") {
+          queryFlightRef = queryFlightRef.where("departureAirportCode", "==", document.getElementById("departure").value);
+        }
+        if (document.getElementById("arrival").value != "-1") {
+          queryFlightRef = queryFlightRef.where("arrivalAirportCode", "==", document.getElementById("arrival").value);
+        }
+        if (document.getElementById("departure_time").value) {
+          queryFlightRef = queryFlightRef.where("timestamp", ">=", new Date(new Date(document.getElementById("departure_time").value).getTime()-6.048e8)).where("timestamp", "<=", new Date(new Date(document.getElementById("departure_time").value).getTime()+6.048e8));
+        }
+
+        queryFlightRef.get().then(result=>{
+          var code = "";
+          for (doc of result.docs) {
+            code += parse(doc.data(), doc._document.proto.name);
+          }
+          document.getElementById("boxes").innerHTML = code;
+        });
+/*
+        db.collection("users/" + auth.currentUser.uid + "/flights").add({
+          departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
+          departureAirportCode: document.getElementById("departure").value,
+          arrivalAirport: document.getElementById("arrival").selectedOptions[0].innerText,
+          arrivalAirportCode: document.getElementById("arrival").value,
+          departureDate: document.getElementById("departure_time").value,
+          arrivalDate: document.getElementById("arrival_time").value,
+          created: firebase.firestore.FieldValue.serverTimestamp(),
+          departureTime: departureTime,
+          arrivalTime: arrivalTime,
+          gate: gate
+        }).then(function() {
+          return db.collection("flights").add({
+            departureAirport: document.getElementById("departure").selectedOptions[0].innerText,
+            departureAirportCode: document.getElementById("departure").value,
+            arrivalAirport: document.getElementById("arrival").selectedOptions[0].innerText,
+            arrivalAirportCode: document.getElementById("arrival").value,
+            departureDate: document.getElementById("departure_time").value,
+            arrivalDate: document.getElementById("arrival_time").value,
+            created: firebase.firestore.FieldValue.serverTimestamp(),
+            departureTime: departureTime,
+            arrivalTime: arrivalTime,
+            gate: gate
+          });
+        }).then(function() {
+          location.href = "seat";
+        }).catch(function(error) {
+          alert(error);
+        })*/
+      })
     })
-  })
-})
-</script>
+  </script>
 
 </head>
+
 <body>
-  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <img src="images/inline-brand.png" alt="Omega">
@@ -111,21 +171,21 @@ addEventListener("load", function() {
 
       </div>
       <div class="navbar-end">
-<div id="signed_out_buttons" class="navbar-item is-hidden">
-  <h2>
-    Hello, Friend!
-  </h2>&nbsp&nbsp
-  <p class="control">
-    <a id="sign_out" class="button is-palette-dull">
-      <span class="icon">
-        <i class="fas fa-key"></i>
-      </span>
-      <span>
-        Log Out
-      </span>
-    </a>
-  </p>
-</div>
+        <div id="signed_out_buttons" class="navbar-item is-hidden">
+          <h2>
+            Hello, Friend!
+          </h2>&nbsp&nbsp
+          <p class="control">
+            <a id="sign_out" class="button is-palette-dull">
+              <span class="icon">
+                <i class="fas fa-key"></i>
+              </span>
+              <span>
+                Log Out
+              </span>
+            </a>
+          </p>
+        </div>
         <div id="signed_in_buttons" class="navbar-item is-hidden">
           <div class="field is-grouped">
             <p class="control">
@@ -161,119 +221,147 @@ addEventListener("load", function() {
     </section>
   </section>
   <section class="section">
-      <div class="columns">
-        <div class="column">
-          <div class="select">
-            <select id="departure">
-              <option value="-1">Departure Airport...</option>
-              <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
-              <option value="HRA">Hagerstown Regional Airport, MD</option>
-              <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
-              <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
-              <option value="LYH">Lynchburg Regional Airport, VA</option>
-              <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
-              <option value="ORF">Norfolk International Airport, VA</option>
-              <option value="RIC">Richmond International Airport, VA</option>
-              <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
-              <option value="CHO">Ronald Reagan Washington National Airport, VA</option>
-              <option value="IAD">Washington Dulles International Airport, VA</option>
-              <option value="ABE">Lehigh Valley International Airport, PA</option>
-              <option value="ERI">Erie International Airport, PA</option>
-              <option value="MDT">Harrisburg International Airport, PA</option>
-              <option value="LBE">Arnold Palmer Regional Airport, PA</option>
-              <option value="PHL">Philadelphia International Airport, PA</option>
-              <option value="PIT">Pittsburgh International Airport, PA</option>
-              <option value="SCE">University Park Airport, PA</option>
-              <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
-              <option value="IPT">Williamsport Regional Airport, PA</option>
-              <option value="CRW">Yeager Airport, WV</option>
-              <option value="CKB">North Central West Virginia Airport, WV</option>
-              <option value="HTS">Tri-State Airport, WV</option>
-              <option value="MGW">Morgantown Municipal Airport, WV</option>
-              <option value="ILG">Wilmington Airport, DE</option>
-            </select>
+    <div class="container">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Departure Airport</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <div class="select is-fullwidth"><select id="departure">
+                  <option selected value="-1">Select an airport...</option>
+                  <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
+                  <option value="HRA">Hagerstown Regional Airport, MD</option>
+                  <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
+                  <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
+                  <option value="LYH">Lynchburg Regional Airport, VA</option>
+                  <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
+                  <option value="ORF">Norfolk International Airport, VA</option>
+                  <option value="RIC">Richmond International Airport, VA</option>
+                  <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
+                  <option value="CHO">Ronald Reagan Washington National Airport, VA</option>
+                  <option value="IAD">Washington Dulles International Airport, VA</option>
+                  <option value="ABE">Lehigh Valley International Airport, PA</option>
+                  <option value="ERI">Erie International Airport, PA</option>
+                  <option value="MDT">Harrisburg International Airport, PA</option>
+                  <option value="LBE">Arnold Palmer Regional Airport, PA</option>
+                  <option value="PHL">Philadelphia International Airport, PA</option>
+                  <option value="PIT">Pittsburgh International Airport, PA</option>
+                  <option value="SCE">University Park Airport, PA</option>
+                  <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
+                  <option value="IPT">Williamsport Regional Airport, PA</option>
+                  <option value="CRW">Yeager Airport, WV</option>
+                  <option value="CKB">North Central West Virginia Airport, WV</option>
+                  <option value="HTS">Tri-State Airport, WV</option>
+                  <option value="MGW">Morgantown Municipal Airport, WV</option>
+                  <option value="ILG">Wilmington Airport, DE</option>
+                </select></div>
+            </div>
+
           </div>
         </div>
-        <div class="column">
-          <div class="select">
-            <select id="arrival">
-              <option value="-1">Arrival Airport...</option>
-              <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
-              <option value="HRA">Hagerstown Regional Airport, MD</option>
-              <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
-              <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
-              <option value="LYH">Lynchburg Regional Airport, VA</option>
-              <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
-              <option value="ORF">Norfolk International Airport, VA</option>
-              <option value="RIC">Richmond International Airport, VA</option>
-              <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
-              <option value="CHO">Ronald Reagan Washington National Airport, VA</option>
-              <option value="IAD">Washington Dulles International Airport, VA</option>
-              <option value="ABE">Lehigh Valley International Airport, PA</option>
-              <option value="ERI">Erie International Airport, PA</option>
-              <option value="MDT">Harrisburg International Airport, PA</option>
-              <option value="LBE">Arnold Palmer Regional Airport, PA</option>
-              <option value="PHL">Philadelphia International Airport, PA</option>
-              <option value="PIT">Pittsburgh International Airport, PA</option>
-              <option value="SCE">University Park Airport, PA</option>
-              <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
-              <option value="IPT">Williamsport Regional Airport, PA</option>
-              <option value="CRW">Yeager Airport, WV</option>
-              <option value="CKB">North Central West Virginia Airport, WV</option>
-              <option value="HTS">Tri-State Airport, WV</option>
-              <option value="MGW">Morgantown Municipal Airport, WV</option>
-              <option value="ILG">Wilmington Airport, DE</option>
-            </select>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Arrival Airport</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <div class="select is-fullwidth"><select id="arrival">
+                  <option selected value="-1">Select an airport...</option>
+                  <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
+                  <option value="HRA">Hagerstown Regional Airport, MD</option>
+                  <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
+                  <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
+                  <option value="LYH">Lynchburg Regional Airport, VA</option>
+                  <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
+                  <option value="ORF">Norfolk International Airport, VA</option>
+                  <option value="RIC">Richmond International Airport, VA</option>
+                  <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
+                  <option value="CHO">Ronald Reagan Washington National Airport, VA</option>
+                  <option value="IAD">Washington Dulles International Airport, VA</option>
+                  <option value="ABE">Lehigh Valley International Airport, PA</option>
+                  <option value="ERI">Erie International Airport, PA</option>
+                  <option value="MDT">Harrisburg International Airport, PA</option>
+                  <option value="LBE">Arnold Palmer Regional Airport, PA</option>
+                  <option value="PHL">Philadelphia International Airport, PA</option>
+                  <option value="PIT">Pittsburgh International Airport, PA</option>
+                  <option value="SCE">University Park Airport, PA</option>
+                  <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
+                  <option value="IPT">Williamsport Regional Airport, PA</option>
+                  <option value="CRW">Yeager Airport, WV</option>
+                  <option value="CKB">North Central West Virginia Airport, WV</option>
+                  <option value="HTS">Tri-State Airport, WV</option>
+                  <option value="MGW">Morgantown Municipal Airport, WV</option>
+                  <option value="ILG">Wilmington Airport, DE</option>
+                </select></div>
+            </div>
+
           </div>
         </div>
-        <div class="column">
-          <p>Departure Date:</p>
-          <input id="departure_time" value="departure" type="date"></input>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Date</label>
         </div>
-        <div class="column">
-          <p>Arrival Date:</p>
-          <input id="arrival_time" value="arrival" type="date"></input>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+
+              <input id="departure_time" type="date">
+            </div>
+          </div>
         </div>
-        <div class="column">
-          <a id="submit" class="button is-link">
-            Choose Your Seat
-          </a>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label"></div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input id="submit" type="submit" class="button is-primary" value="Search">
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="boxes"></div>
     </div>
   </section>
   <section class="container has-text-centered">
     <img src="images/book.jpg" style="max-height: 300px" class="is-inline-block">
   </section>
   <footer class="footer is-dark">
-  <div class="content has-text-centered is-dark">
-  <a href="https://www.instagram.com">
-    <span class="icon is-large has-text-primary">
-      <i class="fab fa-instagram fa-3x"></i>
-    </span>
-  </a>&nbsp;
-  <a href="https://www.twitter.com">
-    <span class="icon is-large has-text-primary">
-      <i class="fab fa-twitter fa-3x"></i>
-    </span>
-  </a>&nbsp;
-  <a href="https://www.facebook.com">
-    <span class="icon is-large has-text-primary">
-      <i class="fab fa-facebook fa-3x"></i>
-    </span></a>&nbsp;
-  <a href="mailto:customerservice@airomega.web.app">
-    <span class="icon is-large has-text-primary">
-      <i class="fas fa-envelope fa-3x"></i>
-    </span>
-  </a>
-    <p>
-      Omega Airlines by Connor Pymm, Adam Goldstein, and Keshav Ganapathy.
-</p>
-<p>
-<a href="credits">Credits</a>
-</p>
+    <div class="content has-text-centered is-dark">
+      <a href="https://www.instagram.com">
+        <span class="icon is-large has-text-primary">
+          <i class="fab fa-instagram fa-3x"></i>
+        </span>
+      </a>&nbsp;
+      <a href="https://www.twitter.com">
+        <span class="icon is-large has-text-primary">
+          <i class="fab fa-twitter fa-3x"></i>
+        </span>
+      </a>&nbsp;
+      <a href="https://www.facebook.com">
+        <span class="icon is-large has-text-primary">
+          <i class="fab fa-facebook fa-3x"></i>
+        </span></a>&nbsp;
+      <a href="mailto:customerservice@airomega.web.app">
+        <span class="icon is-large has-text-primary">
+          <i class="fas fa-envelope fa-3x"></i>
+        </span>
+      </a>
+      <p>
+        Omega Airlines by Connor Pymm, Adam Goldstein, and Keshav Ganapathy.
+      </p>
+      <p>
+        <a href="credits">Credits</a>
+      </p>
 
-    </p>
-  </div>
-</footer>
+      </p>
+    </div>
+  </footer>
 </body>
+
 </html>
