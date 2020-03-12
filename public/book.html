@@ -169,7 +169,6 @@
 
       document.getElementById("submitSeat").addEventListener("click", function() {
         flight["seatNumber"] = Array.from(document.querySelectorAll('.column > .button')).indexOf(document.getElementsByClassName('is-active button')[0])+1;
-        document.getElementById("otherBoxes").innerHTML = "";
 
         db.doc("users/"+auth.currentUser.uid).get().then(function(nameResult) {
           var firstName = nameResult.data().first_name;
