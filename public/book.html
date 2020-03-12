@@ -34,7 +34,17 @@
 
   <script>
     var flights = [];
-    var theFlight;
+    var flight;
+    var flightDoc;
+
+    function colorChange(el) {
+      var item = document.getElementsByClassName('is-active button')[0];
+      if (item) {
+        item.classList.remove('is-active');
+      }
+      el.classList.add('is-active');
+    }
+
     addEventListener("load", function() {
 
       function parse(data, name) {
@@ -62,10 +72,12 @@
                   <br>
                   Arrival Time: <strong>${data.arrivalDateTime.toDate().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</strong>
                   <br>
+                  Seats Remaining: <strong>${data.seatsLeft}</strong>
+                  <br>
                 </p>
                 <div class="field">
                   <div class="control">
-                    <button data-nav="next" onclick="buttonClicked(this)" class="book button is-primary">Book</button>
+                    <button ${(data.seatsLeft > 0) ? "" : "disabled "}data-nav="next" onclick="buttonClicked(this)" class="book button is-primary">Book</button>
                   </div>
                 </div>
               </div>
@@ -74,7 +86,7 @@
         </div>`
       }
 
-      function otherParse(data, name, firstName, lastName) {
+      function otherParse(data, firstName, lastName) {
         return `<div class="box">
           <article class="media">
             <div class="media-left">
@@ -112,8 +124,6 @@
                   Class: <strong>${data.seatNumber <= 18 ? "Economy" : (data.seatNumber <= 42 ? "Business" : "First")}</strong>
                   <br>
                   Boarding Group: <strong>${data.seatNumber <= 18 ? "C" : (data.seatNumber <= 42 ? "B" : "A")}</strong>
-                  <br>
-                  <figure class="image is-128x128 is-marginless"><img src="https://chart.googleapis.com/chart?cht=qr&chs=128x128&chld=H|0&chl=${name}" alt="QR Code; Ask an associate for assistance if needed."></figure>
                 </p>
               </div>
             </div>
@@ -144,7 +154,7 @@
           flights = [];
           for (doc of result.docs) {
             //console.log(doc.data());
-            flights.push(doc.data());
+            flights.push(doc);
             code += parse(doc.data(), doc._document.proto.name);
           }
           document.getElementById("boxes").innerHTML = code;
@@ -156,21 +166,42 @@
         });
 
       })
-    })
 
-    document.getElementById("submitSeat").addEventListener("click", function() {
+      document.getElementById("submitSeat").addEventListener("click", function() {
+        flight["seatNumber"] = Array.from(document.querySelectorAll('.column > .button')).indexOf(document.getElementsByClassName('is-active button')[0])+1;
+        document.getElementById("otherBoxes").innerHTML = "";
 
-    }
+        db.doc("users/"+auth.currentUser.uid).get().then(function(nameResult) {
+          var firstName = nameResult.data().first_name;
+          var lastName = nameResult.data().last_name;
+          document.getElementById("otherBoxes").innerHTML = otherParse(flight, firstName, lastName);
+        });
+      });
+
+      document.getElementById("submitConfirm").addEventListener("click", function() {
+        db.doc(flightDoc._document.proto.name.split("/documents/")[1]).update({
+          seatsLeft: firebase.firestore.FieldValue.increment(-1),
+          seatsTaken: firebase.firestore.FieldValue.arrayUnion(flight["seatNumber"])
+        })
+        db.collection("users/" + auth.currentUser.uid + "/flights").add(flight).then(function() {
+          location.href = "trips";
+        }).catch(function(error) {
+          alert(error);
+        })
+      });
+
+    });
 
     function buttonClicked(button) {
-      db.collection("users/" + auth.currentUser.uid + "/flights").add({
-        ...flights[Array.from(document.getElementsByClassName('book')).indexOf(button)],
-        created: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(function() {
-        //location.href = "seat";
-      }).catch(function(error) {
-        alert(error);
-      })
+      flightDoc = flights[Array.from(document.getElementsByClassName('book')).indexOf(button)];
+      flight = flightDoc.data();
+
+      var items = [...document.querySelectorAll('div.column > a.button')];
+      var item = document.getElementsByClassName('is-active button')[0];
+
+      items.forEach(a=>{a.disabled=false});
+      (flight.seatsTaken || []).forEach(a=>{items[a+1].disabled=true});
+
     }
   </script>
 
@@ -543,14 +574,70 @@
           </div>
           <div class="step-content has-text-centered">
             <h2 class="title is-medium">Please confirm the details below:</h2>
-            <div class="boxes" id="otherBoxes"></div>
+            <section class="section">
+              <div class="boxes" id="otherBoxes">
+                <div class="box">
+                  <article class="media">
+                    <div class="media-left">
+                      <figure class="image is-64x64">
+                        <img src="images/omega.png" alt="Omega">
+                      </figure>
+                    </div>
+                    <div class="media-content">
+                      <div class="content">
+                        <p>
+                          <strong></strong> <strong></strong>
+                          <br>
+                          <br>
+                          Thank you for flying Omega Airlines! We hope you have a fantastic experience on your flight!
+                          <br>
+                          <i>From Alpha to Omega</i>
+                          <br>
+                          <br>
+                          Departure Date: <strong></strong>
+                          <br>
+                          Arrival Date: <strong></strong>
+                          <br>
+                          Flight Number: <strong></strong>
+                          <br>
+                          Departure Airport: <strong></strong>
+                          <br>
+                          Departure Time: <strong></strong>
+                          <br>
+                          Arrival Airport: <strong></strong>
+                          <br>
+                          Arrival Time: <strong></strong>
+                          <br>
+                          Seat Number: <strong></strong>
+                          <br>
+                          Class: <strong></strong>
+                          <br>
+                          Boarding Group: <strong></strong>
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
             <div class="level">
               <div class="level-left">
                 <div class="level-item">
                   <span class="title is-4 is-danger">NOTE: You will be billed for this flight upon booking.</span>
                 </div>
                 <div class="level-item">
-                  <a id="submitConfirm" class="button is-link">Confirm</a>
+                  <section class="section">
+                    <div class="steps-actions">
+                      <div class="steps-action"></div>
+                      <div class="steps-action">
+                        <a data-nav="previous" onclick="document.querySelector('[data-nav=\'previous\']').click()" button is-light">Cancel</a>
+                      </div>
+                      <div class="steps-action">
+                        <a id="submitConfirm" class="button is-primary">Confirm</a>
+                      </div>
+                      <div class="steps-action"></div>
+                    </div>
+                  </section>
                 </div>
                 <div class="level-item">
                   <span class="title is-2">Thank you for flying with Omega Air.</span>
@@ -558,14 +645,6 @@
               </div>
           </div>
 
-        </div>
-          <div class="steps-action">
-            <a data-nav="previous" class="button is-light">Previous</a>
-          </div>
-          <div class="steps-action">
-            <a data-nav="next" class="button is-light">Next</a>
-          </div>
-        </div>
       </div>
     </div>
   </section>
