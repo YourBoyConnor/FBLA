@@ -34,6 +34,7 @@
 
   <script>
     var flights = [];
+    var theFlight;
     addEventListener("load", function() {
 
       function parse(data, name) {
@@ -64,9 +65,56 @@
                 </p>
                 <div class="field">
                   <div class="control">
-                    <button onclick="buttonClicked(this)" class="book button is-primary">Book</button>
+                    <button data-nav="next" onclick="buttonClicked(this)" class="book button is-primary">Book</button>
                   </div>
                 </div>
+              </div>
+            </div>
+          </article>
+        </div>`
+      }
+
+      function otherParse(data, name, firstName, lastName) {
+        return `<div class="box">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <img src="images/omega.png" alt="Omega">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>${firstName}</strong> <strong>${lastName}</strong>
+                  <br>
+                  <br>
+                  Thank you for flying Omega Airlines! We hope you have a fantastic experience on your flight!
+                  <br>
+                  <i>From Alpha to Omega</i>
+                  <br>
+                  <br>
+                  Departure Date: <strong>${data.departureDateTime.toDate().toISOString().substring(0, 10)}</strong>
+                  <br>
+                  Arrival Date: <strong>${data.arrivalDateTime.toDate().toISOString().substring(0, 10)}</strong>
+                  <br>
+                  Flight Number: <strong>#${data.id}</strong>
+                  <br>
+                  Departure Airport: <strong>${data.departureAirport} (${data.departureAirportCode})</strong>
+                  <br>
+                  Departure Time: <strong>${data.departureDateTime.toDate().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</strong>
+                  <br>
+                  Arrival Airport: <strong>${data.arrivalAirport} (${data.arrivalAirportCode})</strong>
+                  <br>
+                  Arrival Time: <strong>${data.arrivalDateTime.toDate().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</strong>
+                  <br>
+                  Seat Number: <strong>${data.seatNumber}</strong>
+                  <br>
+                  Class: <strong>${data.seatNumber <= 18 ? "Economy" : (data.seatNumber <= 42 ? "Business" : "First")}</strong>
+                  <br>
+                  Boarding Group: <strong>${data.seatNumber <= 18 ? "C" : (data.seatNumber <= 42 ? "B" : "A")}</strong>
+                  <br>
+                  <figure class="image is-128x128 is-marginless"><img src="https://chart.googleapis.com/chart?cht=qr&chs=128x128&chld=H|0&chl=${name}" alt="QR Code; Ask an associate for assistance if needed."></figure>
+                </p>
               </div>
             </div>
           </article>
@@ -100,17 +148,26 @@
             code += parse(doc.data(), doc._document.proto.name);
           }
           document.getElementById("boxes").innerHTML = code;
+          if (result.empty) {
+            document.getElementById("boxes").innerHTML = "There are no matching flights. Please select a different date/airport, or check back later."
+          } else {
+            bulmaSteps.attach();
+          }
         });
 
       })
     })
+
+    document.getElementById("submitSeat").addEventListener("click", function() {
+
+    }
 
     function buttonClicked(button) {
       db.collection("users/" + auth.currentUser.uid + "/flights").add({
         ...flights[Array.from(document.getElementsByClassName('book')).indexOf(button)],
         created: firebase.firestore.FieldValue.serverTimestamp()
       }).then(function() {
-        location.href = "seat";
+        //location.href = "seat";
       }).catch(function(error) {
         alert(error);
       })
@@ -209,13 +266,13 @@
   <section class="section">
     <div class="container">
       <div class="steps" id="stepsDemo">
-        <div class="step-item is-success is-completed" data-step-id="0">
+        <div class="step-item is-active" data-step-id="0">
           <div class="step-marker">1</div>
           <div class="step-details">
             <p class="step-title">Select Flight</p>
           </div>
         </div>
-        <div class="step-item is-active" data-step-id="1">
+        <div class="step-item" data-step-id="1">
           <div class="step-marker">2</div>
           <div class="step-details">
             <p class="step-title">Select Seat</p>
@@ -231,122 +288,277 @@
         <div class="steps-content">
           <div class="step-content has-text-centered is-active">
 
-            <section class="section">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Departure Airport</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <div class="select is-fullwidth"><select id="departure">
-                          <option selected value="-1">Select an airport...</option>
-                          <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
-                          <option value="HRA">Hagerstown Regional Airport, MD</option>
-                          <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
-                          <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
-                          <option value="LYH">Lynchburg Regional Airport, VA</option>
-                          <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
-                          <option value="ORF">Norfolk International Airport, VA</option>
-                          <option value="RIC">Richmond International Airport, VA</option>
-                          <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
-                          <option value="DCA">Ronald Reagan Washington National Airport, VA</option>
-                          <option value="IAD">Washington Dulles International Airport, VA</option>
-                          <option value="ABE">Lehigh Valley International Airport, PA</option>
-                          <option value="ERI">Erie International Airport, PA</option>
-                          <option value="MDT">Harrisburg International Airport, PA</option>
-                          <option value="LBE">Arnold Palmer Regional Airport, PA</option>
-                          <option value="PHL">Philadelphia International Airport, PA</option>
-                          <option value="PIT">Pittsburgh International Airport, PA</option>
-                          <option value="SCE">University Park Airport, PA</option>
-                          <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
-                          <option value="IPT">Williamsport Regional Airport, PA</option>
-                          <option value="CRW">Yeager Airport, WV</option>
-                          <option value="CKB">North Central West Virginia Airport, WV</option>
-                          <option value="HTS">Tri-State Airport, WV</option>
-                          <option value="MGW">Morgantown Municipal Airport, WV</option>
-                          <option value="ILG">Wilmington Airport, DE</option>
-                        </select></div>
-                    </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Departure Airport</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="select is-fullwidth"><select id="departure">
+                        <option selected value="-1">Select an airport...</option>
+                        <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
+                        <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
+                        <option value="RIC">Richmond International Airport, VA</option>
+                        <option value="DCA">Ronald Reagan Washington National Airport, VA</option>
+                        <option value="IAD">Washington Dulles International Airport, VA</option>
+                        <option value="MDT">Harrisburg International Airport, PA</option>
+                        <option value="PHL">Philadelphia International Airport, PA</option>
+                        <option value="PIT">Pittsburgh International Airport, PA</option>
+                        <option value="CKB">North Central West Virginia Airport, WV</option>
+                        <option value="HTS">Tri-State Airport, WV</option>
+                        <option value="ILG">Wilmington Airport, DE</option>
+                      </select></div>
+                  </div>
 
-                  </div>
                 </div>
               </div>
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Arrival Airport</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <div class="select is-fullwidth"><select id="arrival">
-                          <option selected value="-1">Select an airport...</option>
-                          <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
-                          <option value="HRA">Hagerstown Regional Airport, MD</option>
-                          <option value="SBY">Salisbury-Ocean City Wicomico Regional Airport, MD</option>
-                          <option value="CHO">Charlottesville–Albemarle Airport, VA</option>
-                          <option value="LYH">Lynchburg Regional Airport, VA</option>
-                          <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
-                          <option value="ORF">Norfolk International Airport, VA</option>
-                          <option value="RIC">Richmond International Airport, VA</option>
-                          <option value="ROA">Roanoke–Blacksburg Regional Airport, VA</option>
-                          <option value="DCA">Ronald Reagan Washington National Airport, VA</option>
-                          <option value="IAD">Washington Dulles International Airport, VA</option>
-                          <option value="ABE">Lehigh Valley International Airport, PA</option>
-                          <option value="ERI">Erie International Airport, PA</option>
-                          <option value="MDT">Harrisburg International Airport, PA</option>
-                          <option value="LBE">Arnold Palmer Regional Airport, PA</option>
-                          <option value="PHL">Philadelphia International Airport, PA</option>
-                          <option value="PIT">Pittsburgh International Airport, PA</option>
-                          <option value="SCE">University Park Airport, PA</option>
-                          <option value="AVP">Wilkes-Barre/Scranton International Airport, PA</option>
-                          <option value="IPT">Williamsport Regional Airport, PA</option>
-                          <option value="CRW">Yeager Airport, WV</option>
-                          <option value="CKB">North Central West Virginia Airport, WV</option>
-                          <option value="HTS">Tri-State Airport, WV</option>
-                          <option value="MGW">Morgantown Municipal Airport, WV</option>
-                          <option value="ILG">Wilmington Airport, DE</option>
-                        </select></div>
-                    </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Arrival Airport</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="select is-fullwidth"><select id="arrival">
+                        <option selected value="-1">Select an airport...</option>
+                        <option value="BWI">Baltimore/Washington International Thurgood Marshall Airport, MD</option>
+                        <option value="PHF">Newport News/Williamsburg International Airport, VA</option>
+                        <option value="RIC">Richmond International Airport, VA</option>
+                        <option value="DCA">Ronald Reagan Washington National Airport, VA</option>
+                        <option value="IAD">Washington Dulles International Airport, VA</option>
+                        <option value="MDT">Harrisburg International Airport, PA</option>
+                        <option value="PHL">Philadelphia International Airport, PA</option>
+                        <option value="PIT">Pittsburgh International Airport, PA</option>
+                        <option value="CKB">North Central West Virginia Airport, WV</option>
+                        <option value="HTS">Tri-State Airport, WV</option>
+                        <option value="ILG">Wilmington Airport, DE</option>
+                      </select></div>
+                  </div>
 
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Date</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input id="departure_time" type="date">
                   </div>
                 </div>
               </div>
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Date</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <input id="departure_time" type="date">
-                    </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input id="submit" type="submit" class="button is-primary" value="Search">
                   </div>
                 </div>
               </div>
-              <div class="field is-horizontal">
-                <div class="field-label"></div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <input id="submit" type="submit" class="button is-primary" value="Search">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            </div>
+
+            <div style="margin-top: 3rem;"></div>
             <div id="boxes"></div>
           </div>
           <div class="step-content has-text-centered">
-
+            <h1 class="title">Economy ($50)</h1>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button is-active">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h1 class="title">Business ($150)</h1>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick=colorChange(this) class="button">Seat</a>
+                    <a onclick=colorChange(this) class="button">Seat</a>
+                    <a onclick=colorChange(this) class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h1 class="title">First ($300)</h1>
+            <div class="columns">
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="columns">
+                  <div class="column">
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                    <a onclick="colorChange(this)" class="button">Seat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="steps-actions">
+              <div class="steps-action"></div>
+              <div class="steps-action">
+                <a data-nav="previous" class="button is-light">Back</a>
+              </div>
+              <div class="steps-action">
+                <a data-nav="next" id="submitSeat" class="button is-primary">Book</a>
+              </div>
+              <div class="steps-action"></div>
+            </div>
           </div>
           <div class="step-content has-text-centered">
-
-
+            <h2 class="title is-medium">Please confirm the details below:</h2>
+            <div class="boxes" id="otherBoxes"></div>
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <span class="title is-4 is-danger">NOTE: You will be billed for this flight upon booking.</span>
+                </div>
+                <div class="level-item">
+                  <a id="submitConfirm" class="button is-link">Confirm</a>
+                </div>
+                <div class="level-item">
+                  <span class="title is-2">Thank you for flying with Omega Air.</span>
+                </div>
+              </div>
           </div>
 
         </div>
-        <div class="steps-actions">
           <div class="steps-action">
             <a data-nav="previous" class="button is-light">Previous</a>
           </div>
