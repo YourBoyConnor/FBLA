@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bulma-calendar": "^6.0.7",
+    "bulma-steps": "^2.2.1",
     "node-sass": "^4.13.1"
   }
 }

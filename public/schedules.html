@@ -50,7 +50,7 @@ function parse(data, name) {
             <br>
             Arrival Date: <strong>${data.arrivalDate}</strong>
             <br>
-            Flight Number: <strong>#OM${data.created.nanoseconds/100000}</strong>
+            Flight Number: <strong>#${data.created.nanoseconds/100000}</strong>
             <br>
             Departure Airport: <strong>${data.departureAirport} (${data.departureAirportCode})</strong>
             <br>

@@ -53,23 +53,23 @@ function parse(data, name, firstName, lastName) {
             <i>From Alpha to Omega</i>
             <br>
             <br>
-            Departure Date: <strong>${data.departureDate}</strong>
+            Departure Date: <strong>${data.departureDateTime.toDate().toISOString().substring(0, 10)}</strong>
             <br>
-            Arrival Date: <strong>${data.arrivalDate}</strong>
+            Arrival Date: <strong>${data.arrivalDateTime.toDate().toISOString().substring(0, 10)}</strong>
             <br>
-            Flight Number: <strong>#OM${data.created.nanoseconds/100000}</strong>
-            <br>
-            Seat Number: <strong>${data.seatNumber}</strong>
+            Flight Number: <strong>#${data.id}</strong>
             <br>
             Departure Airport: <strong>${data.departureAirport} (${data.departureAirportCode})</strong>
             <br>
-            Departure Time: <strong>${data.departureTime}</strong>
+            Departure Time: <strong>${data.departureDateTime.toDate().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</strong>
             <br>
             Arrival Airport: <strong>${data.arrivalAirport} (${data.arrivalAirportCode})</strong>
             <br>
-            Arrival Time: <strong>${data.arrivalTime}</strong>
+            Arrival Time: <strong>${data.arrivalDateTime.toDate().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</strong>
             <br>
             Gate: <strong>${data.gate}</strong>
+            <br>
+            Seat Number: <strong>${data.seatNumber}</strong>
             <br>
             Class: <strong>${data.seatNumber <= 18 ? "Economy" : (data.seatNumber <= 42 ? "Business" : "First")}</strong>
             <br>
@@ -85,7 +85,7 @@ function parse(data, name, firstName, lastName) {
 
 auth.onAuthStateChanged(function(user) {
 
-  db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("departureDate").get().then(result=>{
+  db.collection("users/"+auth.currentUser.uid+"/flights").orderBy("departureDateTime").get().then(result=>{
     db.doc("users/"+auth.currentUser.uid).get().then(function(nameResult) {
       var firstName = nameResult.data().first_name;
       var lastName = nameResult.data().last_name;
