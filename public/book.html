@@ -199,8 +199,8 @@
       var items = [...document.querySelectorAll('div.column > a.button')];
       var item = document.getElementsByClassName('is-active button')[0];
 
-      items.forEach(a=>{a.disabled=false});
-      (flight.seatsTaken || []).forEach(a=>{items[a+1].disabled=true});
+      items.forEach(a=>{a.removeAttribute("disabled")});
+      (flight.seatsTaken || []).forEach(a=>{items[a-1].setAttribute("disabled", "disabled");items[a-1].removeAttribute("is-active")});
 
     }
   </script>
@@ -630,7 +630,7 @@
                     <div class="steps-actions">
                       <div class="steps-action"></div>
                       <div class="steps-action">
-                        <a data-nav="previous" onclick="document.querySelector('[data-nav=\'previous\']').click()" button is-light">Cancel</a>
+                        <a data-nav="previous" onclick="document.querySelector('[data-nav=\'previous\']').click()" class="button is-light">Cancel</a>
                       </div>
                       <div class="steps-action">
                         <a id="submitConfirm" class="button is-primary">Confirm</a>
