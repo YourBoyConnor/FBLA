@@ -200,6 +200,9 @@
 
       items.forEach(a=>{a.removeAttribute("disabled")});
       (flight.seatsTaken || []).forEach(a=>{items[a-1].setAttribute("disabled", "disabled");items[a-1].removeAttribute("is-active")});
+      if (button != document.querySelector("[data-nav='next']")) {
+        document.querySelector("[data-nav='next']").click();
+      }
 
     }
   </script>
